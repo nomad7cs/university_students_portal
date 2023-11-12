@@ -54,6 +54,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
       if (currentUrl != event.currentUrl) {
         currentUrl = event.currentUrl;
         currentUrlStack = event.currentUrlStack;
+        print('listener fired');
         notifyListeners();
       }
     });
@@ -77,39 +78,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   }
 
   @override
-  build(BuildContext context) {
-    print('nav\'s delege building');
-    // urlStateObserver.subscribeToStore(globals.store);
-    // urlStateObserver = StoreProvider.of<MyAppState>(context).state.currentUrl;
-    // var curr = urlStateObserver.
-    // List<MaterialPage> pagesList = urlStateObserver.value.currentUrlStack.map((e) {
-    //   switch (e) {
-    //     // case '/':
-    //     //   return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
-    //     case '/':
-    //     case '/login':
-    //       return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
-    //     case '/home':
-    //       return MaterialPage(child: HomeScreen(title: 'Misr University For Science & Technology'));
-    //     case '/services':
-    //       return MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
-    //   }
-    //   return MaterialPage(key: ValueKey('requestScreen'), child: RequestScreen(serviceName: 'بيان حالة'));
-    // }).toList();
-    // List<MaterialPage> pagesList2 = urlStateObserver2!.currentUrlStack.map((e) {
-    //   switch (e) {
-    //     // case '/':
-    //     //   return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
-    //     case '/':
-    //     case '/login':
-    //       return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
-    //     case '/home':
-    //       return MaterialPage(child: HomeScreen(title: 'Misr University For Science & Technology'));
-    //     case '/services':
-    //       return MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
-    //   }
-    //   return MaterialPage(key: ValueKey('requestScreen'), child: RequestScreen(serviceName: 'بيان حالة'));
-    // }).toList();
+  Widget build(BuildContext context) {
     List<MaterialPage> pagesList = currentUrlStack!.map((e) {
       switch (e) {
         // case '/':
@@ -118,11 +87,14 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
         case '/login':
           return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
         case '/home':
-          return MaterialPage(child: HomeScreen(title: 'Misr University For Science & Technology'));
+          return MaterialPage(
+              key: ValueKey('HomeScreen'), child: HomeScreen(title: 'Misr University For Science & Technology'));
         case '/services':
           return MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
+        case '/request_papaer':
+          return MaterialPage(key: ValueKey('RequestPaper'), child: RequestScreen(serviceName: 'بيان حالة'));
       }
-      return MaterialPage(key: ValueKey('requestScreen'), child: RequestScreen(serviceName: 'بيان حالة'));
+      return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
     }).toList();
 
     print('pagesList:');
