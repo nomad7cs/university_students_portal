@@ -23,17 +23,17 @@ class _CustomAppBarState extends State<CustomAppBar> {
         title: Row(
           children: [
             SizedBox(
-              width: 70.0,
+              width: 58.0,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(7.0),
                 child: Image(
-                  image: AssetImage('assets/img/must-logo.svg'),
+                  image: AssetImage('assets/img/must-logo.png'),
                   fit: BoxFit.fitWidth,
                 ),
               ),
             ),
             SizedBox(width: 10),
-            Text('clge'),
+            Text('Misr University for Science & Technology'),
           ],
         ),
         elevation: 4,

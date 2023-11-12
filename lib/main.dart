@@ -1,18 +1,7 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:redux/redux.dart';
-import 'package:univ_port_app/app_redux/app_state.dart';
 
-import 'app_redux/reducers.dart';
 import 'app_router/app_route_information_parser.dart';
 import 'app_router/app_router_delegate.dart';
-
-// Create the store with our Reducer and Middleware
-final store = Store<MyAppState>(
-  appReducer,
-  initialState: new MyAppState(currentUrl: '/', currentUrlStack: ['/']),
-  // middleware: [loggingMiddleware],
-);
 
 void main() {
   // usePathUrlStrategy();
@@ -41,16 +30,17 @@ class AppShell extends StatefulWidget {
   const AppShell({super.key});
 
   @override
-  State<AppShell> createState() => _AppShellState();
+  State<StatefulWidget> createState() => _AppShellState();
 }
 
 class _AppShellState extends State<AppShell> {
   // final AppRouterStateObserver stateObserver = AppRouterStateObserver(
   //   MyAppState(currentUrl: '', currentUrlStack: ['']),
   // );
-  final AppRouterStateObserver stateObserver = AppRouterStateObserver(store.state);
+  // final AppRouterStateObserver stateObserver = AppRouterStateObserver(globals.store.state);
 
-  late final AppRouterDelegate _routerDelegate = AppRouterDelegate(stateObserver);
+  // late final AppRouterDelegate _routerDelegate = AppRouterDelegate(stateObserver);
+  late final AppRouterDelegate _routerDelegate = AppRouterDelegate();
   final AppRouteInformationParser _routeInformationParser = AppRouteInformationParser();
 
   // @override

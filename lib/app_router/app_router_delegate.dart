@@ -1,52 +1,66 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:redux/redux.dart';
-import 'package:univ_port_app/app_redux/app_state.dart';
 import 'package:univ_port_app/app_router/route_information.dart';
+import 'package:univ_port_app/login_screen.dart';
+import 'package:univ_port_app/request_screen.dart';
 
-import '../app_redux/actions.dart';
+import '../../globals.dart' as globals;
 import '../home_screen.dart';
-import '../main.dart';
 import '../services_requests.dart';
 
-class AppRouterStateObserver extends ValueNotifier<MyAppState> {
-  AppRouterStateObserver(MyAppState initialState) : super(initialState);
-
-  void subscribeToStore(Store<MyAppState> store) {
-    // store.dispatch(NavigateToUrlAction('/')); // Set initial route
-
-    final subscription = store.onChange.listen((state) {
-      value = state;
-      notifyListeners();
-    });
-
-    addListener(() {
-      if (value.currentUrl != store.state.currentUrl) {
-        store.dispatch(NavigateToUrlAction(value.currentUrl));
-      }
-    });
-
-    // disposables.add(subscription);
-  }
-
-  @override
-  void dispose() {
-    // disposables.clear();
-    super.dispose();
-  }
-}
+// class AppRouterStateObserver extends ValueNotifier<MyAppState> {
+//   AppRouterStateObserver(MyAppState initialState) : super(initialState);
+//
+//   void subscribeToStore(Store<MyAppState> store) {
+//     // store.dispatch(NavigateToUrlAction('/')); // Set initial route
+//
+//     final subscription = store.onChange.listen((state) {
+//       value = state;
+//       notifyListeners();
+//     });
+//
+//     addListener(() {
+//       if (value.currentUrl != store.state.currentUrl) {
+//         store.dispatch(NavigateToUrlAction(value.currentUrl));
+//       }
+//     });
+//
+//     // disposables.add(subscription);
+//   }
+//
+//   @override
+//   void dispose() {
+//     // disposables.clear();
+//     super.dispose();
+//   }
+// }
 
 class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
-  final AppRouterStateObserver urlStateObserver;
+  // late AppRouterStateObserver urlStateObserver;
+  // MyAppState? urlStateObserver2 = globals.store.state;
+  final GlobalKey<NavigatorState> navigatorKey;
+  String? currentUrl = '/';
+  List<String>? currentUrlStack = ['/'];
 
-  AppRouterDelegate(this.urlStateObserver) {
-    urlStateObserver.subscribeToStore(store);
+  AppRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
+    //   urlStateObserver.subscribeToStore(store);
+    // globals.store.onChange.listen((event) {
+    //   urlStateObserver2 = event;
+    // });
+
+    globals.store.onChange.listen((event) {
+      if (currentUrl != event.currentUrl) {
+        currentUrl = event.currentUrl;
+        currentUrlStack = event.currentUrlStack;
+        notifyListeners();
+      }
+    });
   }
 
   @override
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  // final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   // @override
   // void initState() {
@@ -64,18 +78,57 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   build(BuildContext context) {
+    print('nav\'s delege building');
+    // urlStateObserver.subscribeToStore(globals.store);
     // urlStateObserver = StoreProvider.of<MyAppState>(context).state.currentUrl;
     // var curr = urlStateObserver.
-    List<MaterialPage> pagesList = urlStateObserver.value.currentUrlStack.map((e) {
+    // List<MaterialPage> pagesList = urlStateObserver.value.currentUrlStack.map((e) {
+    //   switch (e) {
+    //     // case '/':
+    //     //   return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
+    //     case '/':
+    //     case '/login':
+    //       return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
+    //     case '/home':
+    //       return MaterialPage(child: HomeScreen(title: 'Misr University For Science & Technology'));
+    //     case '/services':
+    //       return MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
+    //   }
+    //   return MaterialPage(key: ValueKey('requestScreen'), child: RequestScreen(serviceName: 'بيان حالة'));
+    // }).toList();
+    // List<MaterialPage> pagesList2 = urlStateObserver2!.currentUrlStack.map((e) {
+    //   switch (e) {
+    //     // case '/':
+    //     //   return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
+    //     case '/':
+    //     case '/login':
+    //       return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
+    //     case '/home':
+    //       return MaterialPage(child: HomeScreen(title: 'Misr University For Science & Technology'));
+    //     case '/services':
+    //       return MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
+    //   }
+    //   return MaterialPage(key: ValueKey('requestScreen'), child: RequestScreen(serviceName: 'بيان حالة'));
+    // }).toList();
+    List<MaterialPage> pagesList = currentUrlStack!.map((e) {
       switch (e) {
+        // case '/':
+        //   return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
         case '/':
-          return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
+        case '/login':
+          return MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
+        case '/home':
+          return MaterialPage(child: HomeScreen(title: 'Misr University For Science & Technology'));
         case '/services':
           return MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
       }
-      return MaterialPage(key: ValueKey('HomePage'), child: HomeScreen(title: 'Misr University'));
+      return MaterialPage(key: ValueKey('requestScreen'), child: RequestScreen(serviceName: 'بيان حالة'));
     }).toList();
 
+    print('pagesList:');
+    print(pagesList);
+    // print('pagesList2:');
+    // print(pagesList2);
     return Navigator(
       key: navigatorKey,
       pages: [

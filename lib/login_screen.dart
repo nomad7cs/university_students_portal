@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:univ_port_app/custom_appbar.dart';
 
 import 'app_drawer.dart';
+import 'app_redux/actions.dart';
+import 'globals.dart' as globals;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -116,9 +118,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (_formKey.currentState!.validate()) {
                                   // If the form is valid, display a snackbar. In the real world,
                                   // you'd often call a server or save the information in a database.
-                                  ScaffoldMessenger.of(context).showSnackBar(
+                                  /*ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Processing Data')),
-                                  );
+                                  );*/
+                                  // Navigate to HomeScreen
+                                  globals.store.dispatch(NavigateToUrlAction('/home'));
                                 }
                               },
                               child: const Text('Submit'),
