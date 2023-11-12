@@ -1,3 +1,6 @@
 class MyAppState{
-  int num = 1;
+  final String currentUrl;
+  final List<String> currentUrlStack;
+
+  MyAppState({required this.currentUrl, required this.currentUrlStack});
 }

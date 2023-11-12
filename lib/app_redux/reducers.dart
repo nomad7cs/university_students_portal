@@ -7,14 +7,15 @@
 // Because reducers are pure functions, they should not perform any
 // side-effects, such as making an HTTP request or logging messages
 // to a console. For that, use Middleware.
+import 'package:univ_port_app/app_redux/app_state.dart';
+import 'package:univ_port_app/main.dart';
+
 import 'actions.dart';
 
-int appReducer(int state, action) {
-  if (action == Actions.goToUrl) {
-    return state + 1;
-  } else if (action == Actions.navBack) {
-    return state - 1;
+MyAppState appReducer(MyAppState state, action) {
+  if (action is NavigateToUrlAction) {
+    List<String> newUrlStack = [action.url, ...state.currentUrlStack];
+    return MyAppState(currentUrl: action.url, currentUrlStack: newUrlStack);
   }
-
   return state;
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/custom_appbar.dart';
 
 import 'app_drawer.dart';
 
@@ -15,29 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          // leading: ,
-          elevation: 4,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.notifications_none), // Icons.notification_important
-              tooltip: 'Notifications',
-              onPressed: null,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(right: 15.0),
-              child: false
-                  ? IconButton(
-                icon: Icon(Icons.person),
-                onPressed: () {},
-              )
-                  : IconButton(
-                icon: Icon(Icons.login),
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
+        appBar: CustomAppBar(),
         drawer: AppDrawer(),
         body: SafeArea(
           top: true,
@@ -173,5 +152,3 @@ class _LoginScreenState extends State<LoginScreen> {
         ));
   }
 }
-
-
