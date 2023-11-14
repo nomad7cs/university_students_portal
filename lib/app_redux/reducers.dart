@@ -17,6 +17,8 @@ MyAppState appReducer(MyAppState state, action) {
     return MyAppState(currentUrl: action.url, currentUrlStack: newUrlStack);
   } else if (action is UserLoggedInAction) {
     return MyAppState(currentUrl: state.currentUrl, currentUrlStack: state.currentUrlStack, user: action.user);
+  } else if (action is UserLoggedOutAction) {
+    return MyAppState(currentUrl: state.currentUrl, currentUrlStack: state.currentUrlStack, user: null);
   }
 
   return state;

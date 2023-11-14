@@ -27,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
             return SignInScreen(
               providers: [
                 EmailAuthProvider(),
-                GoogleProvider(clientId: '', redirectUri: '/'), // new
+                GoogleProvider(clientId: '632995148417-p9mgtp7osfcu5do8ijek8mva42moshu1.apps.googleusercontent.com'),
               ],
               actions: [
                 AuthStateChangeAction<SignedIn>((context, state) {
