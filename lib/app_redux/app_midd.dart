@@ -1,7 +1,4 @@
-import 'package:redux/redux.dart';
-
-import 'actions.dart';
-import 'app_state.dart';
+//import 'package:redux/redux.dart';
 
 // A middleware takes in 3 parameters: your Store, which you can use to
 // read state or dispatch new actions, the action that was dispatched,

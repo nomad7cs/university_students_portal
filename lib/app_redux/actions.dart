@@ -7,10 +7,21 @@
 // navBack,
 // }
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 class NavigateToUrlAction {
   final String url;
 
   NavigateToUrlAction(this.url);
+}
+
+class UserLoggedInAction {
+  User? user;
+  UserLoggedInAction(this.user);
+}
+
+class UserLoggedOutAction {
+  UserLoggedOutAction();
 }
 
 // class GoToUrlSucceededAction {

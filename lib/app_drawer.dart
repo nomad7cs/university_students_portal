@@ -40,7 +40,7 @@ class _AppDrawerState extends State<AppDrawer> {
               )),
           ListTile(
             onTap: () {
-              globals.store.dispatch(NavigateToUrlAction('/home'));
+              globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
             },
             leading: const Icon(Icons.dashboard),
             title: const Text('Dashboard'),
@@ -54,7 +54,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             onTap: () {
-              // globals.store.dispatch(NavigateToUrlAction('/profile'));
+              globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
             },
             leading: Icon(Icons.account_circle),
             title: Text('Profile'),
@@ -75,7 +75,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             onTap: () {
-              globals.store.dispatch(NavigateToUrlAction('/services'));
+              globals.reduxStore.dispatch(NavigateToUrlAction('/services'));
             },
             leading: Icon(Icons.history_edu),
             title: Text('Request Papers Services'),

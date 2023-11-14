@@ -15,6 +15,8 @@ MyAppState appReducer(MyAppState state, action) {
   if (action is NavigateToUrlAction) {
     List<String> newUrlStack = [...state.currentUrlStack, action.url];
     return MyAppState(currentUrl: action.url, currentUrlStack: newUrlStack);
+  } else if (action is UserLoggedInAction) {
+    return MyAppState(currentUrl: state.currentUrl, currentUrlStack: state.currentUrlStack, user: action.user);
   }
 
   return state;
