@@ -49,48 +49,48 @@ class _AppDrawerState extends State<AppDrawer> {
             onTap: () {
               // globals.store.dispatch(NavigateToUrlAction('/messages'));
             },
-            leading: Icon(Icons.message),
-            title: Text('Messages'),
+            leading: const Icon(Icons.message),
+            title: const Text('Messages'),
           ),
           ListTile(
             onTap: () {
               globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
             },
-            leading: Icon(Icons.account_circle),
-            title: Text('Profile'),
+            leading: const Icon(Icons.account_circle),
+            title: const Text('Profile'),
           ),
           ListTile(
             onTap: () {
               // globals.store.dispatch(NavigateToUrlAction('/courses'));
             },
-            leading: Icon(Icons.menu_book_rounded),
-            title: Text('Courses'),
+            leading: const Icon(Icons.menu_book_rounded),
+            title: const Text('Courses'),
           ),
           ListTile(
             onTap: () {
               // globals.store.dispatch(NavigateToUrlAction('/payment'));
             },
-            leading: Icon(Icons.payment),
-            title: Text('Payment'),
+            leading: const Icon(Icons.payment),
+            title: const Text('Payment'),
           ),
           ListTile(
             onTap: () {
               globals.reduxStore.dispatch(NavigateToUrlAction('/services'));
             },
-            leading: Icon(Icons.history_edu),
-            title: Text('Request Papers Services'),
+            leading: const Icon(Icons.history_edu),
+            title: const Text('Request Papers Services'),
           ),
           ListTile(
             onTap: () {
               // globals.store.dispatch(NavigateToUrlAction('/settings'));
             },
-            leading: Icon(Icons.settings),
-            title: Text('Settings'),
+            leading: const Icon(Icons.settings),
+            title: const Text('Settings'),
           ),
           ListTile(
             onTap: () {},
-            leading: Icon(Icons.logout_rounded),
-            title: Text('Logout'),
+            leading: const Icon(Icons.logout_rounded),
+            title: const Text('Logout'),
           ),
         ],
       ),

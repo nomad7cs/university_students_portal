@@ -8,6 +8,7 @@
 // }
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:univ_port_app/app_redux/app_state.dart';
 
 class NavigateToUrlAction {
   final String url;
@@ -22,6 +23,30 @@ class UserLoggedInAction {
 
 class UserLoggedOutAction {
   UserLoggedOutAction();
+}
+
+class FetchCoursesAction {}
+
+class FetchCoursesSucceededAction {
+  List<Course> courses;
+  FetchCoursesSucceededAction(this.courses);
+}
+
+class FetchCoursesFailedAction {
+  final dynamic error;
+  FetchCoursesFailedAction(this.error);
+}
+
+class FetchTodayClassesAction {}
+
+class FetchTodayClassesSucceededAction {
+  List<ClassroomSlot> todayClasses;
+  FetchTodayClassesSucceededAction(this.todayClasses);
+}
+
+class FetchTodayClassesFailedAction {
+  final dynamic error;
+  FetchTodayClassesFailedAction(this.error);
 }
 
 // class GoToUrlSucceededAction {

@@ -1,49 +1,16 @@
 class AppRoutePath {
-  // final List<String> currentList;
-  // final int currentPage;
-  String currentUrl = '/';
+  String? currentUrl = '/';
   String? id;
-  bool isUnknown = false;
-  static final paths = <String>[
-    // '',             //  '/'
-    'login',        //  '/login'
-    'student',      //  '/student/:id
-  ];
+  bool? isUnknown = false;
+  // static final paths = <String>[
+  //   '/',              //  '/'
+  //   '/login',         //  '/login'
+  //   '/student/:id',   //  '/student/:id
+  // ];
 
-  AppRoutePath();
-
-  // AppRoutePath.home()
-  //   : isUnknown = false;
-
-  AppRoutePath.student(String this.id) {
-    isUnknown = false;
-    currentUrl = '/student/$id';
-  }
-
-
-  AppRoutePath.unknown()
-    : id = null,
-      isUnknown = true;
-
-  /*AppRoutePath.home()
-      : id = null,
-        isUnknown = false;
-
-  AppRoutePath.details(this.id) : isUnknown = false;
-
-  AppRoutePath.unknown()
-      : id = null,
-        isUnknown = true;
-
-  bool get isHomePage => id == null;
-
-  bool get isDetailsPage => id != null;*/
+  AppRoutePath({
+    this.currentUrl,
+    this.id,
+    this.isUnknown,
+  });
 }
-
-/*
-class AppRouteInformation {
-  final List<String> currentList;
-  final int currentPage;
-
-  AppRouteInformation(this.currentList, this.currentPage);
-}*/

@@ -1,6 +1,7 @@
 library globals;
 
 import 'package:redux/redux.dart' as redux;
+import 'package:univ_port_app/app_redux/middlewares.dart';
 
 import 'app_redux/app_state.dart';
 import 'app_redux/reducers.dart';
@@ -9,5 +10,5 @@ import 'app_redux/reducers.dart';
 final reduxStore = redux.Store<MyAppState>(
   appReducer,
   initialState: MyAppState(currentUrl: '/', currentUrlStack: ['/']),
-  // middleware: [loggingMiddleware],
+  middleware: [fetchTodosMiddleware],
 );

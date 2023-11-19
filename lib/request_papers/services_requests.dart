@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:univ_port_app/service_card.dart';
+import 'package:univ_port_app/request_papers/service_card.dart';
 
-import 'app_drawer.dart';
-import 'custom_appbar.dart';
+import '../app_drawer.dart';
+import '../custom_appbar.dart';
 
 class ServicesScreen extends StatefulWidget {
   const ServicesScreen({super.key});
@@ -16,9 +16,9 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       appBar: CustomAppBar(),
-      drawer: const AppDrawer(),
+      drawer: AppDrawer(),
       body: SafeArea(
           top: true,
           child: Wrap(

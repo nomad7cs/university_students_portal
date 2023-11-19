@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 
-import 'app_drawer.dart';
-import 'custom_appbar.dart';
+import '../app_drawer.dart';
+import '../custom_appbar.dart';
 
-class RequestScreen extends StatefulWidget {
+class RequestScreen extends StatelessWidget {
   final String serviceName;
+
   const RequestScreen({super.key, required this.serviceName});
 
-  // final String title;
-
-  @override
-  State<RequestScreen> createState() => _RequestScreenState();
-}
-
-class _RequestScreenState extends State<RequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: const CustomAppBar(),
       drawer: const AppDrawer(),
       body: SafeArea(
           top: true,
@@ -35,10 +29,10 @@ class _RequestScreenState extends State<RequestScreen> {
                     mainAxisSize: MainAxisSize.max,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         child: Text(
-                          widget.serviceName,
-                          style: TextStyle(
+                          serviceName,
+                          style: const TextStyle(
                             // color: Colors.white,
                             fontSize: 24,
                           ),
@@ -49,11 +43,11 @@ class _RequestScreenState extends State<RequestScreen> {
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         width: 170,
                         // height: 20,
                         // color: Colors.grey,
-                        child: LinearProgressIndicator(
+                        child: const LinearProgressIndicator(
                           color: Colors.deepOrange,
                           backgroundColor: Colors.black38,
                           value: 0.5,
@@ -64,36 +58,36 @@ class _RequestScreenState extends State<RequestScreen> {
                   Row(
                     children: [
                       Container(
-                        padding: EdgeInsets.only(left: 15),
-                        child: Text('Progress: 50%'),
+                        padding: const EdgeInsets.only(left: 15),
+                        child: const Text('Progress: 50%'),
                       )
                     ],
                   ),
 
                   // Text('Request Follow Up')
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 75,
                     backgroundImage: AssetImage('assets/img/gear-computer-icons-symbol-follow-up-org.png'),
                     // backgroundColor: Colors.brown.shade800,
                     // child: const Text('HR'),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10.0,
                   ),
-                  TextButton(onPressed: () {}, child: Text('Request Follow Up')),
-                  SizedBox(
+                  TextButton(onPressed: () {}, child: const Text('Request Follow Up')),
+                  const SizedBox(
                     height: 50.0,
                   ),
-                  FilledButton(onPressed: () {}, child: Text('Check')),
-                  SizedBox(
+                  FilledButton(onPressed: () {}, child: const Text('Check')),
+                  const SizedBox(
                     height: 50.0,
                   ),
-                  FilledButton(onPressed: () {}, child: Text('Payment')),
-                  SizedBox(
+                  FilledButton(onPressed: () {}, child: const Text('Payment')),
+                  const SizedBox(
                     height: 100.0,
                   ),
-                  Icon(Icons.history_edu, size: 70),
-                  TextButton(onPressed: () {}, child: Text('Go to All Services')),
+                  const Icon(Icons.history_edu, size: 70),
+                  TextButton(onPressed: () {}, child: const Text('Go to All Services')),
 
                   //  Check
                   // Upload Files

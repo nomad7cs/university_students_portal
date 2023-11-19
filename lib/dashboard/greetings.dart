@@ -15,14 +15,14 @@ class DashboardGreetings extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  child: Text(
+                  padding: const EdgeInsets.only(left: 15),
+                  child: const Text(
                     'Hello, Hossam',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
                   ),
-                  padding: EdgeInsets.only(left: 15),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 15),
+                  padding: const EdgeInsets.only(left: 15),
                   child: Text(
                     '2-10-2023',
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
@@ -43,14 +43,14 @@ class DashboardGreetings extends StatelessWidget {
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15.0),
-                          borderSide: BorderSide(color: Colors.grey, width: 0.5),
+                          borderSide: const BorderSide(color: Colors.grey, width: 0.5),
                         ),
                         labelText: 'Search',
-                        prefixIcon: Icon(Icons.search)),
+                        prefixIcon: const Icon(Icons.search)),
                   ),
                 ),
-                SizedBox(width: 10),
-                Icon(Icons.notifications_none)
+                const SizedBox(width: 10),
+                const Icon(Icons.notifications_none)
               ],
             )),
       ],

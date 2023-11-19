@@ -1,54 +1,60 @@
 import 'package:flutter/material.dart';
 
-class UpCommingAssignments extends StatefulWidget {
-  const UpCommingAssignments({super.key});
+class UpComingAssignments extends StatefulWidget {
+  const UpComingAssignments({super.key});
 
   @override
-  State<UpCommingAssignments> createState() => _UpCommingAssignmentsState();
+  State<UpComingAssignments> createState() => _UpComingAssignmentsState();
 }
 
-class _UpCommingAssignmentsState extends State<UpCommingAssignments> {
+class _UpComingAssignmentsState extends State<UpComingAssignments> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Card(
           child: ListTile(
-            leading: Icon(Icons.check_box),
-            title: Text('AI 220 Assignment',
+            leading: const Icon(Icons.check_box),
+            title: const Text(
+              'AI 220 Assignment',
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            subtitle: Text('29/10/2023',
+            subtitle: Text(
+              '29/10/2023',
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
             ),
-            trailing: IconButton(icon: Icon(Icons.keyboard_arrow_right_rounded), onPressed: (){}),
+            trailing: IconButton(icon: const Icon(Icons.keyboard_arrow_right_rounded), onPressed: () {}),
           ),
         ),
         Card(
           child: ListTile(
-            leading: Icon(Icons.check_box_outline_blank),
-            title: Text('CS 320 Assingment',
+            leading: const Icon(Icons.check_box_outline_blank),
+            title: const Text(
+              'CS 320 Assignment',
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            subtitle: Text('1/11/2023',
+            subtitle: Text(
+              '1/11/2023',
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
             ),
-            trailing: IconButton(icon: Icon(Icons.keyboard_arrow_right_rounded), onPressed: (){}),
+            trailing: IconButton(icon: const Icon(Icons.keyboard_arrow_right_rounded), onPressed: () {}),
           ),
         ),
         Card(
           child: ListTile(
-            leading: Icon(Icons.check_box_outline_blank),
-            title: Text('Math 250 Assignment',
+            leading: const Icon(Icons.check_box_outline_blank),
+            title: const Text(
+              'Math 250 Assignment',
               style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
             ),
-            subtitle: Text('3/11/2023',
+            subtitle: Text(
+              '3/11/2023',
               style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
             ),
-            trailing: IconButton(icon: Icon(Icons.keyboard_arrow_right_rounded), onPressed: (){}),
+            trailing: IconButton(icon: const Icon(Icons.keyboard_arrow_right_rounded), onPressed: () {}),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         OutlinedButton(
           style: OutlinedButton.styleFrom(
             // side: const BorderSide(color: Colors.red, width: 2),

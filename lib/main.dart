@@ -13,7 +13,8 @@ import 'globals.dart' as globals;
 Future<void> initializeFirebase() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  FirebaseUIAuth.configureProviders([GoogleProvider(clientId: 'GOOGLE_CLIENT_ID')]);
+  FirebaseUIAuth.configureProviders(
+      [GoogleProvider(clientId: '16819903455-v6tobhje14li36q175dqc9n7blkql5qt.apps.googleusercontent.com')]);
 
   FirebaseAuth.instance.userChanges().listen((user) {
     if (user != null) {
@@ -28,7 +29,7 @@ Future<void> main() async {
   // usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await initializeFirebase();
-  runApp(AppShell());
+  runApp(const AppShell());
 }
 
 class AppShell extends StatefulWidget {

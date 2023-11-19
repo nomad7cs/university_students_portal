@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/app_redux/actions.dart';
 
-class ServiceCard extends StatefulWidget {
+import '../globals.dart' as globals;
+
+class ServiceCard extends StatelessWidget {
   final String title;
   final String translation;
   final String price;
@@ -8,17 +11,13 @@ class ServiceCard extends StatefulWidget {
   const ServiceCard({super.key, required this.title, required this.translation, required this.price});
 
   @override
-  State<ServiceCard> createState() => _ServiceCardState();
-}
-
-class _ServiceCardState extends State<ServiceCard> {
-  @override
   Widget build(BuildContext context) {
     return Container(
+      padding: const EdgeInsets.all(1.0),
       width: MediaQuery.of(context).size.width > 300 ? 300 : 200,
       child: Card(
         child: Container(
-          padding: EdgeInsets.all(7),
+          padding: const EdgeInsets.all(7),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,16 +25,16 @@ class _ServiceCardState extends State<ServiceCard> {
               ListTile(
                 // leading: Icon(Icons.album),
                 // title: Text('The Enchanted Nightingale'),
-                title: Text(widget.title),
-                subtitle: Text(widget.translation),
+                title: Text(title),
+                subtitle: Text(translation),
               ),
-              Divider(
+              const Divider(
                 thickness: 0.5,
                 indent: 20.0,
                 endIndent: 20.0,
                 color: Colors.grey,
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               // Container(
               //   child: Text(widget.price),
               // ),
@@ -43,18 +42,22 @@ class _ServiceCardState extends State<ServiceCard> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                    const Text('سعر الخدمة'),
-                    Text(widget.price),
+                  const Text('سعر الخدمة'),
+                  Text(price),
                 ],
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Row(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
                     width: MediaQuery.of(context).size.width < 350 ? 100 : 150,
-                    child: FilledButton(onPressed: () {}, child: Text('Request')),
+                    child: FilledButton(
+                        onPressed: () {
+                          globals.reduxStore.dispatch(NavigateToUrlAction('/request_paper'));
+                        },
+                        child: const Text('Request')),
                   ),
                 ],
               )

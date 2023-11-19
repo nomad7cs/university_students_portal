@@ -22,7 +22,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
       child: AppBar(
         // leading: ,
         toolbarHeight: 100.0,
-        backgroundColor: Color.fromARGB(255, 25, 47, 89),
+        backgroundColor: const Color.fromARGB(255, 25, 47, 89),
         foregroundColor: Colors.white,
         title: Row(
           children: [
@@ -30,20 +30,20 @@ class _CustomAppBarState extends State<CustomAppBar> {
               width: 58.0,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(7.0),
-                child: Image(
+                child: const Image(
                   image: AssetImage('assets/img/must-logo.png'),
                   fit: BoxFit.fitWidth,
                 ),
               ),
             ),
-            SizedBox(width: 10),
-            Text('Misr University for Science & Technology'),
+            const SizedBox(width: 10),
+            const Text('Misr University for Science & Technology'),
           ],
         ),
         elevation: 4,
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.notifications_none, color: Colors.white), // Icons.notification_important
+          const IconButton(
+            icon: Icon(Icons.notifications_none, color: Colors.white), // Icons.notification_important
             tooltip: 'Notifications',
             onPressed: null,
           ),

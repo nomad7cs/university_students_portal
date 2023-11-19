@@ -14,12 +14,66 @@ import 'actions.dart';
 MyAppState appReducer(MyAppState state, action) {
   if (action is NavigateToUrlAction) {
     List<String> newUrlStack = [...state.currentUrlStack, action.url];
-    return MyAppState(currentUrl: action.url, currentUrlStack: newUrlStack);
+    // TODO: Check if it's needed to Remove the url from the stack if it's appended to the new stack
+    return MyAppState(
+      currentUrl: action.url,
+      currentUrlStack: newUrlStack,
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      // studentId: state.studentId,
+      unknownUrl: state.unknownUrl,
+    );
   } else if (action is UserLoggedInAction) {
-    return MyAppState(currentUrl: state.currentUrl, currentUrlStack: state.currentUrlStack, user: action.user);
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: state.currentUrlStack,
+      user: action.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      // studentId: ,
+      unknownUrl: state.unknownUrl,
+    );
   } else if (action is UserLoggedOutAction) {
-    return MyAppState(currentUrl: state.currentUrl, currentUrlStack: state.currentUrlStack, user: null);
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: state.currentUrlStack,
+      user: null,
+      todayCourses: null,
+      studentCourses: null,
+      // studentId: null,
+      unknownUrl: state.unknownUrl,
+    );
+  } else if (action is FetchCoursesAction) {
+    // TODO: Use a 'fetching' state
+    return state;
+  } else if (action is FetchCoursesSucceededAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: state.currentUrlStack,
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: action.courses,
+      // studentId: state.studentId,
+      unknownUrl: state.unknownUrl,
+    );
+  } else if (action is FetchCoursesFailedAction) {
+    return state;
+  } else if (action is FetchTodayClassesAction) {
+    // TODO: Use a 'fetching' state
+    return state;
+  } else if (action is FetchTodayClassesSucceededAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: state.currentUrlStack,
+      user: state.user,
+      todayCourses: action.todayClasses,
+      studentCourses: state.studentCourses,
+      // studentId: state.studentId,
+      unknownUrl: state.unknownUrl,
+    );
+  } else if (action is FetchTodayClassesFailedAction) {
+    return state;
   }
-
   return state;
 }

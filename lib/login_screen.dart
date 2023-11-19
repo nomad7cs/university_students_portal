@@ -27,7 +27,8 @@ class _LoginScreenState extends State<LoginScreen> {
             return SignInScreen(
               providers: [
                 EmailAuthProvider(),
-                GoogleProvider(clientId: '632995148417-p9mgtp7osfcu5do8ijek8mva42moshu1.apps.googleusercontent.com'),
+                // GoogleProvider(clientId: '632995148417-p9mgtp7osfcu5do8ijek8mva42moshu1.apps.googleusercontent.com'),
+                GoogleProvider(clientId: '16819903455-v6tobhje14li36q175dqc9n7blkql5qt.apps.googleusercontent.com')
               ],
               actions: [
                 AuthStateChangeAction<SignedIn>((context, state) {
@@ -73,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
               },
             );
           }
-          return HomeScreen(title: 'Misr University For Science & Technology');
+          return const HomeScreen(title: 'Misr University For Science & Technology');
         });
     // return Scaffold(
     //     appBar: CustomAppBar(),

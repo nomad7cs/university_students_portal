@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_router/route_information.dart';
 import 'package:univ_port_app/custom_profile_screen.dart';
 import 'package:univ_port_app/login_screen.dart';
-import 'package:univ_port_app/request_screen.dart';
+import 'package:univ_port_app/request_papers/request_screen.dart';
 
 import '../../globals.dart' as globals;
 import '../home_screen.dart';
-import '../services_requests.dart';
+import '../request_papers/services_requests.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
@@ -29,7 +29,10 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   AppRoutePath get currentConfiguration {
-    return AppRoutePath(); // TODO: Implement based on appState listener (URL)
+    final result = AppRoutePath();
+    result.currentUrl = globals.reduxStore.state.currentUrl;
+    result.isUnknown = globals.reduxStore.state.unknownUrl;
+    return result;
   }
 
   @override
@@ -38,12 +41,12 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
         .map((e) {
           switch (e) {
             case '/':
-              if (globals.reduxStore.state.user != null) {
-                return const MaterialPage(
-                    key: ValueKey('HomeScreen'), child: HomeScreen(title: 'Misr University For Science & Technology'));
-              } else {
-                return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
-              }
+              // if (globals.reduxStore.state.user != null) {
+              return const MaterialPage(
+                  key: ValueKey('HomeScreen'), child: HomeScreen(title: 'Misr University For Science & Technology'));
+            // } else {
+            //   return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
+            // }
             case '/login':
               if (globals.reduxStore.state.user == null) {
                 return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
@@ -72,7 +75,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
           return false;
         }
 
-        /*  Needed ??
+        /*  Needed ?????????
         * // Update the list of pages by setting _selectedBook to null
         * setState(() {
         * _selectedBook = null;
@@ -82,7 +85,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
         * */
 
         // Update the list of pages by setting _selectedBook to null
-        // TODO: Update appState
+        // globals.reduxStore.dispatch(action)  // todo: update appstate
         notifyListeners();
 
         return true;
@@ -91,8 +94,27 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   }
 
   @override
-  Future<void> setNewRoutePath(AppRoutePath configuration) {
-    // TODO
-    throw UnimplementedError();
+  Future<void> setNewRoutePath(AppRoutePath configuration) async {
+    /*
+    if (configuration.isUnknown) {
+      _selectedBook = null;
+      show404 = true;
+      return;
+    }
+
+    if (configuration.isDetailsPage) {
+      if (configuration.id < 0 || configuration.id > books.length - 1) {
+        show404 = true;
+        return;
+      }
+
+      _selectedBook = books[configuration.id];
+    } else {
+      _selectedBook = null;
+    }
+
+    show404 = false;
+    * */
+    return;
   }
 }
