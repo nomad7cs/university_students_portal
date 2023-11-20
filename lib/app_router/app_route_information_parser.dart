@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'route_information.dart';
@@ -5,6 +6,9 @@ import 'route_information.dart';
 class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   @override
   Future<AppRoutePath> parseRouteInformation(RouteInformation routeInformation) async {
+    if (kDebugMode) {
+      print('AppRouteInformationParser.parseRouteInformation is called');
+    }
     final uri = routeInformation.uri;
     final result = AppRoutePath();
     result.currentUrl = uri.path;
@@ -31,6 +35,9 @@ class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
 
   @override
   RouteInformation restoreRouteInformation(AppRoutePath configuration) {
+    if (kDebugMode) {
+      print('AppRouteInformationParser.restoreRouteInformation is called');
+    }
     /*
     if (configuration.isUnknown) {
       return RouteInformation(uri: Uri.parse('/404'));

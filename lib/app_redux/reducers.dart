@@ -13,11 +13,26 @@ import 'actions.dart';
 
 MyAppState appReducer(MyAppState state, action) {
   if (action is NavigateToUrlAction) {
-    List<String> newUrlStack = [...state.currentUrlStack, action.url];
+    List<String> newUrlStack;
+    if (state.currentUrlStack.contains(action.url)) {
+      int duplicateUrlIndex = state.currentUrlStack.indexOf(action.url);
+      if (state.currentUrlStack.length == 1) {
+        newUrlStack = state.currentUrlStack;
+      } else {
+        List<String> t = [...state.currentUrlStack];
+        t.remove(action.url);
+        newUrlStack = [
+          ...t,
+          action.url,
+        ];
+      }
+    } else {
+      newUrlStack = [...state.currentUrlStack, action.url];
+    }
     // TODO: Check if it's needed to Remove the url from the stack if it's appended to the new stack
     return MyAppState(
       currentUrl: action.url,
-      currentUrlStack: newUrlStack,
+      currentUrlStack: [...newUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
       studentCourses: state.studentCourses,
@@ -27,7 +42,7 @@ MyAppState appReducer(MyAppState state, action) {
   } else if (action is UserLoggedInAction) {
     return MyAppState(
       currentUrl: state.currentUrl,
-      currentUrlStack: state.currentUrlStack,
+      currentUrlStack: [...state.currentUrlStack],
       user: action.user,
       todayCourses: state.todayCourses,
       studentCourses: state.studentCourses,
@@ -37,7 +52,7 @@ MyAppState appReducer(MyAppState state, action) {
   } else if (action is UserLoggedOutAction) {
     return MyAppState(
       currentUrl: state.currentUrl,
-      currentUrlStack: state.currentUrlStack,
+      currentUrlStack: [...state.currentUrlStack],
       user: null,
       todayCourses: null,
       studentCourses: null,
@@ -50,7 +65,7 @@ MyAppState appReducer(MyAppState state, action) {
   } else if (action is FetchCoursesSucceededAction) {
     return MyAppState(
       currentUrl: state.currentUrl,
-      currentUrlStack: state.currentUrlStack,
+      currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
       studentCourses: action.courses,
@@ -65,7 +80,7 @@ MyAppState appReducer(MyAppState state, action) {
   } else if (action is FetchTodayClassesSucceededAction) {
     return MyAppState(
       currentUrl: state.currentUrl,
-      currentUrlStack: state.currentUrlStack,
+      currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: action.todayClasses,
       studentCourses: state.studentCourses,

@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/app_router/route_information.dart';
 import 'package:univ_port_app/custom_profile_screen.dart';
 import 'package:univ_port_app/login_screen.dart';
@@ -9,6 +11,7 @@ import 'package:univ_port_app/request_papers/request_screen.dart';
 import '../../globals.dart' as globals;
 import '../home_screen.dart';
 import '../request_papers/services_requests.dart';
+import '../splash_screen.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
@@ -19,9 +22,12 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   AppRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
     globals.reduxStore.onChange.listen((event) {
+      if (kDebugMode) {
+        print('changing the stack############################');
+      }
       if (currentUrl != event.currentUrl) {
         currentUrl = event.currentUrl;
-        currentUrlStack = event.currentUrlStack;
+        currentUrlStack = [...event.currentUrlStack];
         notifyListeners();
       }
     });
@@ -29,6 +35,9 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   AppRoutePath get currentConfiguration {
+    if (kDebugMode) {
+      print('AppRouterDelegate.currentConfiguration is called');
+    }
     final result = AppRoutePath();
     result.currentUrl = globals.reduxStore.state.currentUrl;
     result.isUnknown = globals.reduxStore.state.unknownUrl;
@@ -37,40 +46,47 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   Widget build(BuildContext context) {
-    List<MaterialPage> pagesList = currentUrlStack!
-        .map((e) {
-          switch (e) {
-            case '/':
-              // if (globals.reduxStore.state.user != null) {
-              return const MaterialPage(
-                  key: ValueKey('HomeScreen'), child: HomeScreen(title: 'Misr University For Science & Technology'));
-            // } else {
-            //   return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
-            // }
-            case '/login':
-              if (globals.reduxStore.state.user == null) {
-                return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
-              }
-            case '/home':
-              return const MaterialPage(
-                  key: ValueKey('HomeScreen'), child: HomeScreen(title: 'Misr University For Science & Technology'));
-            case '/services':
-              return const MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
-            case '/request_paper':
-              return const MaterialPage(key: ValueKey('RequestPaper'), child: RequestScreen(serviceName: 'بيان حالة'));
-            case '/profile':
-              return const MaterialPage(key: ValueKey('Profile'), child: CustomProfileScreen());
-          }
+    List<MaterialPage> pagesList = currentUrlStack!.map((e) {
+      if (kDebugMode) {
+        print('building PAGES....page $e');
+      }
+      switch (e) {
+        case '/':
+          // if (globals.reduxStore.state.user != null) {
+          return const MaterialPage(
+            key: ValueKey('splashScreen'),
+            child: SplashScreen(),
+          );
+        // } else {
+        //   return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
+        // }
+        case '/login':
+          // if (globals.reduxStore.state.user == null) {
           return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
-        })
+        // }
+        case '/home':
+          return const MaterialPage(
+              key: ValueKey('HomeScreen'), child: HomeScreen(title: 'Misr University For Science & Technology'));
+        case '/services':
+          return const MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
+        case '/request_paper':
+          return const MaterialPage(key: ValueKey('RequestPaper'), child: RequestScreen(serviceName: 'بيان حالة'));
+        case '/profile':
+          return const MaterialPage(key: ValueKey('Profile'), child: CustomProfileScreen());
+      }
+      return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
+    })
         // .toList()
-        .toSet()
+        // .toSet()
         .toList();
 
     return Navigator(
       key: navigatorKey,
       pages: [...pagesList],
       onPopPage: (route, result) {
+        if (kDebugMode) {
+          print('AppRouterDelegate .. onPopPage called');
+        }
         if (!route.didPop(result)) {
           return false;
         }
@@ -95,26 +111,13 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   Future<void> setNewRoutePath(AppRoutePath configuration) async {
-    /*
-    if (configuration.isUnknown) {
-      _selectedBook = null;
-      show404 = true;
-      return;
+    if (kDebugMode) {
+      print('AppRouterDelegate.setNewRoutePath is called');
+    }
+    if (configuration.currentUrl != null) {
+      globals.reduxStore.dispatch(NavigateToUrlAction(configuration.currentUrl!));
     }
 
-    if (configuration.isDetailsPage) {
-      if (configuration.id < 0 || configuration.id > books.length - 1) {
-        show404 = true;
-        return;
-      }
-
-      _selectedBook = books[configuration.id];
-    } else {
-      _selectedBook = null;
-    }
-
-    show404 = false;
-    * */
     return;
   }
 }
