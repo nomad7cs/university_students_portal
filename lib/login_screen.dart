@@ -1,11 +1,11 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/globals.dart' as globals;
 import 'package:univ_port_app/home_screen.dart';
 
 import 'app_redux/actions.dart';
 import 'app_redux/app_state.dart';
-import 'globals.dart' as globals;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -15,15 +15,15 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
+  // final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<MyAppState?>(
-        stream: globals.reduxStore.onChange,
+    return StreamBuilder<AppUser?>(
+        stream: globals.reduxStore.onChange.map((event) => event.user),
         // stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData && (snapshot.data?.user == null)) {
+          if (!snapshot.hasData || (snapshot.data == null)) {
             return SignInScreen(
               providers: [
                 EmailAuthProvider(),
@@ -33,7 +33,8 @@ class _LoginScreenState extends State<LoginScreen> {
               actions: [
                 AuthStateChangeAction<SignedIn>((context, state) {
                   globals.reduxStore.dispatch(UserLoggedInAction(state.user));
-                  globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
+                  globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: state.user!.uid));
+                  globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
                   // Navigator.pushReplacementNamed(context, '/profile');
                 }),
               ],
@@ -75,6 +76,7 @@ class _LoginScreenState extends State<LoginScreen> {
             );
           }
           return const HomeScreen(title: 'Misr University For Science & Technology');
+          // return ServicesScreen();
         });
   }
 }

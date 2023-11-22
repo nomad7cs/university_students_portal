@@ -49,15 +49,33 @@ class FetchTodayClassesFailedAction {
   FetchTodayClassesFailedAction(this.error);
 }
 
-// class GoToUrlSucceededAction {
-//   // final String url;
-//   //
-//   // GoToUrlSucceededAction(this.url);
-// }
-//
-// class GoToUrlFailedAction {
-//   final Exception error;
-//
-//   GoToUrlFailedAction(this.error) {
-//   }
-// }
+class SetUserTypeAction {
+  int choice;
+  SetUserTypeAction(this.choice);
+}
+
+class SetTypeStudentPayloadAction {
+  final bool payload;
+  SetTypeStudentPayloadAction(this.payload);
+}
+
+class SaveIsStudentAction {}
+
+class ExitEditStudentTypeAction {}
+
+class FetchExtraUserInfoAction {
+  final String uid;
+  FetchExtraUserInfoAction({required this.uid});
+}
+
+class FetchExtraUserInfoSucceededAction {
+  bool isStudent;
+  FetchExtraUserInfoSucceededAction(this.isStudent);
+}
+
+class FetchExtraUserInfoFailedAction {
+  final dynamic error;
+  FetchExtraUserInfoFailedAction(this.error);
+}
+
+class ToggleEditingUserTypeAction {}

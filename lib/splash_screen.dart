@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
-
-import 'globals.dart' as globals;
+import 'package:univ_port_app/globals.dart' as globals;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,8 +20,8 @@ class _SplashScreenState extends State<SplashScreen> {
         print('SplashScreen delayed navigation!!!!');
       }
       // Update state or perform action here
-      globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
-      // globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+      // globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
+      globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
     });
   }
 

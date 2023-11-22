@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
           // padding: const EdgeInsets.only(right: 15.0, left: 15.0),
           padding: const EdgeInsets.all(15.0),
           children: const [
-            // DashboardDetails(),
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

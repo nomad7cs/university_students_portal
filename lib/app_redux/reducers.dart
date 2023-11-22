@@ -15,7 +15,7 @@ MyAppState appReducer(MyAppState state, action) {
   if (action is NavigateToUrlAction) {
     List<String> newUrlStack;
     if (state.currentUrlStack.contains(action.url)) {
-      int duplicateUrlIndex = state.currentUrlStack.indexOf(action.url);
+      // int duplicateUrlIndex = state.currentUrlStack.indexOf(action.url);
       if (state.currentUrlStack.length == 1) {
         newUrlStack = state.currentUrlStack;
       } else {
@@ -36,18 +36,22 @@ MyAppState appReducer(MyAppState state, action) {
       user: state.user,
       todayCourses: state.todayCourses,
       studentCourses: state.studentCourses,
-      // studentId: state.studentId,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
     );
   } else if (action is UserLoggedInAction) {
     return MyAppState(
       currentUrl: state.currentUrl,
       currentUrlStack: [...state.currentUrlStack],
-      user: action.user,
+      user: AppUser(firebaseUser: action.user!),
       todayCourses: state.todayCourses,
       studentCourses: state.studentCourses,
-      // studentId: ,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
     );
   } else if (action is UserLoggedOutAction) {
     return MyAppState(
@@ -56,8 +60,10 @@ MyAppState appReducer(MyAppState state, action) {
       user: null,
       todayCourses: null,
       studentCourses: null,
-      // studentId: null,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
     );
   } else if (action is FetchCoursesAction) {
     // TODO: Use a 'fetching' state
@@ -69,8 +75,10 @@ MyAppState appReducer(MyAppState state, action) {
       user: state.user,
       todayCourses: state.todayCourses,
       studentCourses: action.courses,
-      // studentId: state.studentId,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
     );
   } else if (action is FetchCoursesFailedAction) {
     return state;
@@ -84,10 +92,52 @@ MyAppState appReducer(MyAppState state, action) {
       user: state.user,
       todayCourses: action.todayClasses,
       studentCourses: state.studentCourses,
-      // studentId: state.studentId,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
     );
   } else if (action is FetchTodayClassesFailedAction) {
+    return state;
+  } else if (action is ToggleEditingUserTypeAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
+      unknownUrl: state.unknownUrl,
+      editingUserType: !state.editingUserType!,
+    );
+  } else if (action is SetTypeStudentPayloadAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      isStudent: state.isStudent,
+      isStudentPayload: action.payload,
+      unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
+    );
+  } else if (action is FetchExtraUserInfoAction) {
+    return state;
+  } else if (action is FetchExtraUserInfoSucceededAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      isStudent: action.isStudent,
+      isStudentPayload: state.isStudentPayload,
+      unknownUrl: state.unknownUrl,
+      editingUserType: state.editingUserType,
+    );
+  } else if (action is SaveIsStudentAction) {
     return state;
   }
   return state;

@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
-
-import 'globals.dart' as globals;
+import 'package:univ_port_app/app_redux/app_state.dart';
+import 'package:univ_port_app/globals.dart' as globals;
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key});
@@ -49,13 +48,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
           ),
           Padding(
               padding: const EdgeInsets.only(right: 15.0),
-              child: StreamBuilder<User?>(
+              child: StreamBuilder<AppUser?>(
                 stream: globals.reduxStore.onChange.map((event) => event.user),
-                builder: (BuildContext context, AsyncSnapshot<User?> snapshot) {
+                builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
                   if (snapshot.data != null) {
                     return IconButton(
                       icon: const Icon(Icons.account_circle),
-                      onPressed: () {}, // TODO: Implement a dropdown or navigate to profile
+                      onPressed: () {
+                        globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
+                      }, // TODO: Implement a dropdown or navigate to profile
                     );
                   }
                   return IconButton(

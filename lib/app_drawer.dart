@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/globals.dart' as globals;
 
 import 'app_redux/actions.dart';
-import 'globals.dart' as globals;
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({super.key});
@@ -91,6 +91,13 @@ class _AppDrawerState extends State<AppDrawer> {
             onTap: () {},
             leading: const Icon(Icons.logout_rounded),
             title: const Text('Logout'),
+          ),
+          ListTile(
+            onTap: () {
+              globals.reduxStore.dispatch(NavigateToUrlAction('/admin'));
+            },
+            leading: const Icon(Icons.edit),
+            title: const Text('Add/Remove Classrooms\n(POC)'),
           ),
         ],
       ),

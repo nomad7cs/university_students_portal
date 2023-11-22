@@ -3,11 +3,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 class MyAppState {
   final String currentUrl;
   final List<String> currentUrlStack;
-  User? user;
+  AppUser? user;
   bool? unknownUrl = false;
   // String? studentId;
   List<ClassroomSlot>? todayCourses;
   List<Course>? studentCourses;
+  bool? isStudent;
+  bool? isStudentPayload;
+  bool editingUserType = false;
 
   MyAppState({
     required this.currentUrl,
@@ -17,6 +20,9 @@ class MyAppState {
     this.studentCourses,
     // this.studentId,
     this.unknownUrl,
+    this.isStudentPayload,
+    this.isStudent,
+    this.editingUserType = false,
   });
 }
 
@@ -33,6 +39,13 @@ class Course {
       // this.schedule,
       this.id,
       this.img});
+}
+
+class AppUser {
+  User firebaseUser;
+  bool? isStudent;
+  Course? courses;
+  AppUser({required this.firebaseUser, this.isStudent, this.courses});
 }
 
 class ClassroomSlot {

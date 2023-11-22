@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/app_redux/app_state.dart';
 import 'package:univ_port_app/dashboard/class_sch_card.dart';
-
-import '../globals.dart' as globals;
+import 'package:univ_port_app/globals.dart' as globals;
 
 class TodayClasses extends StatefulWidget {
   const TodayClasses({super.key});

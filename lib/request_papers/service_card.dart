@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
-
-import '../globals.dart' as globals;
+import 'package:univ_port_app/globals.dart' as globals;
 
 class ServiceCard extends StatelessWidget {
   final String title;
