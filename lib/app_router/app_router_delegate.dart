@@ -17,23 +17,26 @@ import '../splash_screen.dart';
 class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
   @override
-  final GlobalKey<NavigatorState> navigatorKey;
-  // String? currentUrl = '/login';
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   String? currentUrl = globals.reduxStore.state.currentUrl;
-  // List<String>? currentUrlStack = ['/login'];
   List<String>? currentUrlStack = globals.reduxStore.state.currentUrlStack;
+  late StreamSubscription _urlSubscription;
 
-  AppRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
-    globals.reduxStore.onChange.listen((event) {
-      if (kDebugMode) {
-        print('changing the stack############################');
-      }
-      // if (currentUrl != event.currentUrl) {
+  AppRouterDelegate() {
+    if (kDebugMode) {
+      print('\x1B[32mRe instantiating the RouterDelegate\x1B[0m');
+    }
+    _urlSubscription = globals.reduxStore.onChange.listen((event) {
       currentUrl = event.currentUrl;
       currentUrlStack = [...event.currentUrlStack];
       notifyListeners();
-      // }
     });
+  }
+
+  @override
+  void dispose() {
+    _urlSubscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -42,17 +45,16 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
       print('AppRouterDelegate.currentConfiguration is called');
     }
     final result = AppRoutePath();
-    result.currentUrl = globals.reduxStore.state.currentUrl;
+    result.currentUrl = currentUrl;
     result.isUnknown = globals.reduxStore.state.unknownUrl;
     return result;
   }
 
   @override
   Widget build(BuildContext context) {
+    List<String> tmpList = [];
     List<MaterialPage> pagesList = currentUrlStack!.map((e) {
-      if (kDebugMode) {
-        print('building PAGES....page $e');
-      }
+      tmpList.add(e);
       switch (e) {
         case '/':
           // if (globals.reduxStore.state.user != null) {
@@ -82,21 +84,22 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
         // .toList()
         // .reversed
         .toList();
+
     if (kDebugMode) {
-      print('the stack is');
-      for (var p in pagesList) {
-        print(p.key);
+      print('\x1B[35mRouterDelegate  building PAGES....\x1B[0m');
+      for (var ee in tmpList) {
+        print('\t\tpage $ee');
       }
-      print('end of stack');
+      print('\x1B[35m pagesList[0].key:  ${pagesList[0].key}\x1B[0m');
     }
 
     return Navigator(
       key: navigatorKey,
       pages: [...pagesList],
       onPopPage: (route, result) {
-        if (kDebugMode) {
-          print('AppRouterDelegate .. onPopPage called');
-        }
+        // if (kDebugMode) {
+        //   print('AppRouterDelegate .. onPopPage called');
+        // }
         if (!route.didPop(result)) {
           return false;
         }
@@ -121,9 +124,9 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   Future<void> setNewRoutePath(AppRoutePath configuration) async {
-    if (kDebugMode) {
-      print('AppRouterDelegate.setNewRoutePath is called');
-    }
+    // if (kDebugMode) {
+    //   print('AppRouterDelegate.setNewRoutePath is called');
+    // }
     if (configuration.currentUrl != null) {
       globals.reduxStore.dispatch(NavigateToUrlAction(configuration.currentUrl!));
     }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/globals.dart' as globals;
 
@@ -11,8 +13,28 @@ class AppDrawer extends StatefulWidget {
 }
 
 class _AppDrawerState extends State<AppDrawer> {
+  late StreamSubscription _subscription;
+  String? _username;
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = globals.reduxStore.onChange.listen((event) {
+      setState(() {
+        _username = event.user?.firebaseUser.displayName;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('\x1B[31mBuilding appdrawer\x1B[0m');
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -29,9 +51,9 @@ class _AppDrawerState extends State<AppDrawer> {
                     backgroundColor: Colors.brown.shade800,
                     // child: const Text('HR'),
                   ),
-                  const Text(
-                    'Hossam Ramzy',
-                    style: TextStyle(
+                  Text(
+                    _username ?? "",
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 24,
                     ),

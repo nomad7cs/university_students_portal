@@ -1,7 +1,34 @@
-import 'package:flutter/material.dart';
+import 'dart:async';
 
-class DashboardGreetings extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:univ_port_app/globals.dart' as globals;
+
+class DashboardGreetings extends StatefulWidget {
   const DashboardGreetings({super.key});
+
+  @override
+  State<DashboardGreetings> createState() => _DashboardGreetingsState();
+}
+
+class _DashboardGreetingsState extends State<DashboardGreetings> {
+  late StreamSubscription _subscription;
+  String? _username;
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = globals.reduxStore.onChange.listen((event) {
+      setState(() {
+        _username = event.user?.firebaseUser.displayName;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +43,9 @@ class DashboardGreetings extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.only(left: 15),
-                  child: const Text(
-                    'Hello, Hossam',
-                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+                  child: Text(
+                    'Hello, ${_username ?? ""}',
+                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
                   ),
                 ),
                 Container(

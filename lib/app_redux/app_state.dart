@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class MyAppState {
   final String currentUrl;
@@ -10,7 +11,10 @@ class MyAppState {
   List<Course>? studentCourses;
   bool? isStudent;
   bool? isStudentPayload;
-  bool editingUserType = false;
+  bool editingUser = false;
+  int? totalEarnedHours;
+  int? earnedHoursPayload;
+  int stateCounter;
 
   MyAppState({
     required this.currentUrl,
@@ -22,8 +26,27 @@ class MyAppState {
     this.unknownUrl,
     this.isStudentPayload,
     this.isStudent,
-    this.editingUserType = false,
-  });
+    this.editingUser = false,
+    this.totalEarnedHours,
+    this.earnedHoursPayload,
+    this.stateCounter = 1,
+  }) {
+    if (kDebugMode) {
+      print('\x1B[33m${DateTime.now()}\x1B[0m');
+      print('\x1B[33mState Number:\x1B[0m $stateCounter');
+      print('\x1B[33mCurrentUrl:\x1B[0m $currentUrl \t \x1B[33mcurrentUrlStack:\x1B[0m  $currentUrlStack');
+      print('\x1B[33muser.uid:\x1B[0m  ${user?.firebaseUser.uid}');
+      print('\x1B[33muser.name:\x1B[0m  ${user?.firebaseUser.displayName}');
+      print('\x1B[33meditingUserType:\x1B[0m  $editingUser \t\x1B[33misStudentPayload:\x1B[0m $isStudentPayload');
+      print('\x1B[33misStudent:\x1B[0m  $isStudent');
+      print('\x1B[33mtotalEarnedHours:\x1B[0m  $totalEarnedHours');
+      print('\x1B[33mearnedHoursPayload:\x1B[0m  $earnedHoursPayload');
+    }
+  }
+
+  // toString() {
+  //   return "--currentUrl: " + currentUrl + "       --isStudent: " + '${isStudent ?? null}';
+  // }
 }
 
 class Course {

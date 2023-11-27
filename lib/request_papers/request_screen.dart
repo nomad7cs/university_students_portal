@@ -1,12 +1,45 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/app_redux/actions.dart';
+import 'package:univ_port_app/globals.dart' as globals;
 
 import '../app_drawer.dart';
 import '../custom_appbar.dart';
 
-class RequestScreen extends StatelessWidget {
+class RequestScreen extends StatefulWidget {
   final String serviceName;
 
   const RequestScreen({super.key, required this.serviceName});
+
+  @override
+  State<RequestScreen> createState() => _RequestScreenState();
+}
+
+class _RequestScreenState extends State<RequestScreen> {
+  late StreamSubscription _subscription;
+  // int? _payload;
+  int? creditHours;
+
+  @override
+  void initState() {
+    super.initState();
+    globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
+    _subscription = globals.reduxStore.onChange.listen((event) {
+      creditHours = event.totalEarnedHours ?? 0;
+      // if (event.earnedHoursPayload == null) {
+      //   _payload = event.totalEarnedHours;
+      // } else {
+      //   _payload = event.earnedHoursPayload;
+      // }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +64,7 @@ class RequestScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          serviceName,
+                          widget.serviceName,
                           style: const TextStyle(
                             // color: Colors.white,
                             fontSize: 24,
@@ -40,29 +73,76 @@ class RequestScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        width: 170,
-                        // height: 20,
-                        // color: Colors.grey,
-                        child: const LinearProgressIndicator(
-                          color: Colors.deepOrange,
-                          backgroundColor: Colors.black38,
-                          value: 0.5,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: const Text('Progress: 50%'),
-                      )
-                    ],
-                  ),
+                  () {
+                    int? creditHours = globals.reduxStore.state.totalEarnedHours;
+                    if ((creditHours != null) && (creditHours > 100)) {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                width: 170,
+                                // height: 20,
+                                // color: Colors.grey,
+                                child: const LinearProgressIndicator(
+                                  color: Colors.deepOrange,
+                                  backgroundColor: Colors.black38,
+                                  value: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: const Text('Progress: 100%'),
+                              )
+                            ],
+                          ),
+                          const Row(
+                            children: [
+                              Text('Your request is ready to deliver!'),
+                            ],
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(15),
+                                width: 170,
+                                // height: 20,
+                                // color: Colors.grey,
+                                child: const LinearProgressIndicator(
+                                  color: Colors.deepOrange,
+                                  backgroundColor: Colors.black38,
+                                  value: 0.3,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: const Text('Progress: 30%'),
+                              )
+                            ],
+                          ),
+                          const Row(
+                            children: [
+                              Text('Your total credit hours is below required!'),
+                            ],
+                          ),
+                        ],
+                      );
+                    }
+                  }(),
 
                   // Text('Request Follow Up')
                   const CircleAvatar(

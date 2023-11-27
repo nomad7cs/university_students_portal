@@ -9,6 +9,6 @@ import 'app_redux/reducers.dart';
 // Create the store with our Reducer and Middleware
 final reduxStore = redux.Store<MyAppState>(
   appReducer,
-  initialState: MyAppState(currentUrl: '/login', currentUrlStack: ['/login']),
+  initialState: MyAppState(currentUrl: '/', currentUrlStack: ['/']),
   middleware: [fetchTodosMiddleware],
 );

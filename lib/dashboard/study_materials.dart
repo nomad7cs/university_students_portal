@@ -5,10 +5,7 @@ class StudyMaterials extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return
-        // IntrinsicHeight(
-        // child:
-        Material(
+    return Material(
       elevation: 4.0,
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       color: Colors.blue[50],
@@ -40,9 +37,21 @@ class StudyMaterials extends StatelessWidget {
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
-                    // SizedBox(width: 5.0),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.download))
+                    Material(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        color: Colors.blue[50],
+                        child: IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye))),
+                    const SizedBox(width: 5),
+                    Material(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        color: Colors.blue[50],
+                        child: IconButton(onPressed: () {}, icon: const Icon(Icons.download))),
                   ],
                 )),
               ],
@@ -71,9 +80,21 @@ class StudyMaterials extends StatelessWidget {
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
-                    // SizedBox(width: 5.0),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.download))
+                    Material(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        color: Colors.blue[50],
+                        child: IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye))),
+                    const SizedBox(width: 5),
+                    Material(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        color: Colors.blue[50],
+                        child: IconButton(onPressed: () {}, icon: const Icon(Icons.download))),
                   ],
                 )),
               ],
@@ -104,9 +125,21 @@ class StudyMaterials extends StatelessWidget {
                     child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye)),
-                    // SizedBox(width: 5.0),
-                    IconButton(onPressed: () {}, icon: const Icon(Icons.download))
+                    Material(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        color: Colors.blue[50],
+                        child: IconButton(onPressed: () {}, icon: const Icon(Icons.remove_red_eye))),
+                    const SizedBox(width: 5),
+                    Material(
+                        elevation: 1.0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
+                        color: Colors.blue[50],
+                        child: IconButton(onPressed: () {}, icon: const Icon(Icons.download))),
                   ],
                 )),
               ],
@@ -118,10 +151,6 @@ class StudyMaterials extends StatelessWidget {
           ],
         ),
       ),
-    )
-
-        // ,
-        // )
-        ;
+    );
   }
 }

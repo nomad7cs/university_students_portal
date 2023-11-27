@@ -41,33 +41,45 @@ void fetchTodosMiddleware(Store<MyAppState> store, action, NextDispatcher next) 
     }).catchError((error) {
       store.dispatch(FetchTodayClassesFailedAction(error));
     });
-  } else if (action is SaveIsStudentAction) {
+  } else if (action is SaveUserDataAction) {
     /*
     TODO: rebuild
     if (!_loggedIn) {
       throw Exception('Must be logged in');
     }
     * */
+
     FirebaseFirestore.instance
         .collection('users')
         .where('uid', isEqualTo: globals.reduxStore.state.user?.firebaseUser.uid)
         .get()
-        .then((event) {
-      if (event.docs.isNotEmpty) {
-        event.docs[0].reference.update({'isStudent': globals.reduxStore.state.isStudentPayload}).then((value) {
+        .then((documentSnapshot) {
+      if (documentSnapshot.docs.isNotEmpty) {
+        documentSnapshot.docs[0].reference.update({
+          'isStudent': globals.reduxStore.state.isStudentPayload,
+          'totalEarnedHours': globals.reduxStore.state.earnedHoursPayload,
+        }).then((value) {
+          if (kDebugMode) {
+            print('\x1B[33mUser\'s data are created successfully\x1B[0m');
+          }
+          globals.reduxStore.dispatch(ToggleEditingUserAction(false));
           globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
-          globals.reduxStore.dispatch(ToggleEditingUserTypeAction());
         });
       } else {
         FirebaseFirestore.instance.collection('users').doc().set({
           'uid': globals.reduxStore.state.user?.firebaseUser.uid,
-          'isStudent': globals.reduxStore.state.isStudentPayload
+          'isStudent': globals.reduxStore.state.isStudentPayload,
+          'totalEarnedHours': globals.reduxStore.state.earnedHoursPayload,
         }).then((value) {
+          if (kDebugMode) {
+            print('\x1B[33mUser\'s data are updated successfully\x1B[0m');
+          }
+          globals.reduxStore.dispatch(ToggleEditingUserAction(false));
           globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
-          globals.reduxStore.dispatch(ToggleEditingUserTypeAction());
         });
       }
     }).catchError((error) {
+      // error.
       // store.dispatch(XxxxxxFailedAction(error));
     });
   } else if (action is FetchExtraUserInfoAction) {
@@ -78,15 +90,30 @@ void fetchTodosMiddleware(Store<MyAppState> store, action, NextDispatcher next) 
     }
     * */
 
-    FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: action.uid).get().then((event) {
-      if (event.docs.isNotEmpty) {
-        if (kDebugMode) {
-          print('event.docs[0][isStudent]:');
-          print(event.docs[0]['isStudent']);
+    FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: action.uid).get().then((documentSnapshot) {
+      if (documentSnapshot.docs.isNotEmpty) {
+        // if (kDebugMode) {
+        //   print('event.docs[0][isStudent]:');
+        //   print(event.docs[0]['isStudent']);
+        // }
+        bool? isStudent;
+        int? totalEarnedHours;
+        if (documentSnapshot.docs[0].data().containsKey('isStudent')) {
+          isStudent = documentSnapshot.docs[0]['isStudent'];
         }
-        store.dispatch(FetchExtraUserInfoSucceededAction(event.docs[0]['isStudent']));
+        if (documentSnapshot.docs[0].data().containsKey('totalEarnedHours')) {
+          totalEarnedHours = documentSnapshot.docs[0]['totalEarnedHours'];
+        }
+
+        store.dispatch(FetchExtraUserInfoSucceededAction(
+          isStudent,
+          totalEarnedHours,
+        ));
       }
     }).catchError((error) {
+      print('\x1B[31m ERORR!!!!!!!!!!!!!!!!!!ERROR!!!!!!!!!!!!!!!!1 \x1B[0m');
+      print(error);
+
       store.dispatch(FetchExtraUserInfoFailedAction(error));
     });
   }

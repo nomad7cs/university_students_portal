@@ -2,10 +2,8 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/globals.dart' as globals;
-import 'package:univ_port_app/home_screen.dart';
 
 import 'app_redux/actions.dart';
-import 'app_redux/app_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -19,64 +17,56 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<AppUser?>(
-        stream: globals.reduxStore.onChange.map((event) => event.user),
-        // stream: FirebaseAuth.instance.authStateChanges(),
-        builder: (context, snapshot) {
-          if (!snapshot.hasData || (snapshot.data == null)) {
-            return SignInScreen(
-              providers: [
-                EmailAuthProvider(),
-                // GoogleProvider(clientId: '632995148417-p9mgtp7osfcu5do8ijek8mva42moshu1.apps.googleusercontent.com'),
-                GoogleProvider(clientId: '16819903455-v6tobhje14li36q175dqc9n7blkql5qt.apps.googleusercontent.com')
-              ],
-              actions: [
-                AuthStateChangeAction<SignedIn>((context, state) {
-                  globals.reduxStore.dispatch(UserLoggedInAction(state.user));
-                  globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: state.user!.uid));
-                  globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
-                  // Navigator.pushReplacementNamed(context, '/profile');
-                }),
-              ],
-              headerBuilder: (context, constraints, shrinkOffset) {
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset('assets/img/must-logo.png'),
-                  ),
-                );
-              },
-              subtitleBuilder: (context, action) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: action == AuthAction.signIn
-                      ? const Text('Welcome to Misr University For Science & Technology,\n lease sign in!')
-                      : const Text('Welcome to Misr University For Science & Technology,\n please sign up!'),
-                );
-              },
-              footerBuilder: (context, action) {
-                return const Padding(
-                  padding: EdgeInsets.only(top: 16),
-                  child: Text(
-                    'By signing in, you agree to our terms and conditions.',
-                    style: TextStyle(color: Colors.grey),
-                  ),
-                );
-              },
-              sideBuilder: (context, shrinkOffset) {
-                return Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: AspectRatio(
-                    aspectRatio: 1,
-                    child: Image.asset('assets/img/must-logo.png'),
-                  ),
-                );
-              },
-            );
-          }
-          return const HomeScreen(title: 'Misr University For Science & Technology');
-          // return ServicesScreen();
-        });
+    return SignInScreen(
+      providers: [
+        EmailAuthProvider(),
+        // GoogleProvider(clientId: '632995148417-p9mgtp7osfcu5do8ijek8mva42moshu1.apps.googleusercontent.com'),
+        GoogleProvider(clientId: '16819903455-v6tobhje14li36q175dqc9n7blkql5qt.apps.googleusercontent.com')
+      ],
+      actions: [
+        AuthStateChangeAction<SignedIn>((context, state) {
+          globals.reduxStore.dispatch(UserLoggedInAction(state.user));
+          globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: state.user!.uid));
+          globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
+          // Navigator.pushReplacementNamed(context, '/profile');
+        }),
+      ],
+      headerBuilder: (context, constraints, shrinkOffset) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: Image.asset('assets/img/must-logo.png'),
+          ),
+        );
+      },
+      subtitleBuilder: (context, action) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: action == AuthAction.signIn
+              ? const Text('Welcome to Misr University For Science & Technology,\n lease sign in!')
+              : const Text('Welcome to Misr University For Science & Technology,\n please sign up!'),
+        );
+      },
+      footerBuilder: (context, action) {
+        return const Padding(
+          padding: EdgeInsets.only(top: 16),
+          child: Text(
+            'By signing in, you agree to our terms and conditions.',
+            style: TextStyle(color: Colors.grey),
+          ),
+        );
+      },
+      sideBuilder: (context, shrinkOffset) {
+        return Padding(
+          padding: const EdgeInsets.all(20),
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: Image.asset('assets/img/must-logo.png'),
+            // child: Image.asset('assets/img/must-logo.png'),
+          ),
+        );
+      },
+    );
   }
 }

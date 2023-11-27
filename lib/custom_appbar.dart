@@ -30,13 +30,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(7.0),
                 child: const Image(
+                  // image: AssetImage('assets/img/must-logo.png'),
                   image: AssetImage('assets/img/must-logo.png'),
                   fit: BoxFit.fitWidth,
                 ),
               ),
             ),
             const SizedBox(width: 10),
-            const Text('Misr University for Science & Technology'),
+            // const Text('Misr University for Science & Technology'),
+            const Text('blaa blablabla blablablablablabla'),
           ],
         ),
         elevation: 4,

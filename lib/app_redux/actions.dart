@@ -50,7 +50,7 @@ class FetchTodayClassesFailedAction {
 }
 
 class SetUserTypeAction {
-  int choice;
+  final int choice;
   SetUserTypeAction(this.choice);
 }
 
@@ -59,9 +59,9 @@ class SetTypeStudentPayloadAction {
   SetTypeStudentPayloadAction(this.payload);
 }
 
-class SaveIsStudentAction {}
+class SaveUserDataAction {}
 
-class ExitEditStudentTypeAction {}
+class ExitEditStudentAction {}
 
 class FetchExtraUserInfoAction {
   final String uid;
@@ -69,8 +69,9 @@ class FetchExtraUserInfoAction {
 }
 
 class FetchExtraUserInfoSucceededAction {
-  bool isStudent;
-  FetchExtraUserInfoSucceededAction(this.isStudent);
+  bool? isStudent;
+  int? totalEarnedHours;
+  FetchExtraUserInfoSucceededAction(this.isStudent, this.totalEarnedHours);
 }
 
 class FetchExtraUserInfoFailedAction {
@@ -78,4 +79,12 @@ class FetchExtraUserInfoFailedAction {
   FetchExtraUserInfoFailedAction(this.error);
 }
 
-class ToggleEditingUserTypeAction {}
+class ToggleEditingUserAction {
+  final bool payload;
+  ToggleEditingUserAction(this.payload);
+}
+
+class SetEarnedHoursPayloadAction {
+  int? payload;
+  SetEarnedHoursPayloadAction(this.payload);
+}

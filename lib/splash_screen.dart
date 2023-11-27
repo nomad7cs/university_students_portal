@@ -14,14 +14,19 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+
+    final user = globals.reduxStore.state.user;
+
     // Perform the action after 1.2 seconds
     Future.delayed(const Duration(milliseconds: 1200), () {
       if (kDebugMode) {
         print('SplashScreen delayed navigation!!!!');
       }
-      // Update state or perform action here
-      // globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
-      globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+      if (user != null) {
+        globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
+      } else {
+        globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+      }
     });
   }
 
@@ -38,6 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 padding: const EdgeInsets.all(20),
                 child: AspectRatio(
                   aspectRatio: 1,
+                  // child: Image.asset('assets/img/must-logo.png'),
                   child: Image.asset('assets/img/must-logo.png'),
                 ),
               ),

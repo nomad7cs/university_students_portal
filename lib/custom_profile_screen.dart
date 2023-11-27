@@ -1,10 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_drawer.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
-import 'package:univ_port_app/app_redux/app_state.dart';
 import 'package:univ_port_app/custom_appbar.dart';
+import 'package:univ_port_app/earnedHours.dart';
 import 'package:univ_port_app/globals.dart' as globals;
-import 'package:univ_port_app/teacher_or_student.dart';
+import 'package:univ_port_app/usertype.dart';
 
 class CustomProfileScreen extends StatefulWidget {
   const CustomProfileScreen({super.key});
@@ -14,13 +16,30 @@ class CustomProfileScreen extends StatefulWidget {
 }
 
 class _CustomProfileScreenState extends State<CustomProfileScreen> {
-  bool _edit = false;
-  int? _choice;
+  late StreamSubscription _subscription;
+  bool? _editingUser = false;
+  String? _username;
+  int? _totalEarnedHours;
 
   @override
   void initState() {
     super.initState();
-    globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
+    if (globals.reduxStore.state.isStudent == null) {
+      globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
+    }
+    _subscription = globals.reduxStore.onChange.listen((event) {
+      setState(() {
+        _editingUser = event.editingUser;
+        _username = event.user?.firebaseUser.displayName ?? '';
+        _totalEarnedHours = event.totalEarnedHours ?? 0;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
   }
 
   @override
@@ -43,90 +62,77 @@ class _CustomProfileScreenState extends State<CustomProfileScreen> {
                 backgroundColor: Colors.brown.shade800,
               ),
             ),
-            const Flexible(
+            Flexible(
               child: Text(
-                'Hossam Ramzy',
-                style: TextStyle(
-                  color: Colors.white,
+                'Name: $_username',
+                style: const TextStyle(
+                  color: Colors.black,
                   fontSize: 24,
                 ),
               ),
             ),
+            const Divider(),
+            /* ************************************************************************************************************ */
             Flexible(
-              fit: FlexFit.loose,
-              flex: 0,
-              child: StreamBuilder<MyAppState>(
-                stream: globals.reduxStore.onChange,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        snapshot.data!.editingUserType! ? EditTeacherOrStudent() : TeacherOrStudent(),
-                        // const Spacer(),
-                        // if (snapshot.data!.editingUserType != null && snapshot.data!.editingUserType == true)
-                        //   EditTeacherOrStudent(),
-                        // if (snapshot.data!.editingUserType == null || snapshot.data!.editingUserType == false)
-                        //   TeacherOrStudent(),
-                        // StreamBuilder<bool?>(
-                        //   stream: globals.reduxStore.onChange.map((event) => event.editIsStudent),
-                        //   builder: (context, snapshot) {
-                        //     if (!snapshot.hasData || snapshot.data == null) {
-                        //     } else if (snapshot.data == true) {
-                        //       return EditTeacherOrStudent();
-                        //     }
-                        //     return TeacherOrStudent();
-                        //   },
-                        // ),
-                        const SizedBox(width: 25.0),
-                        const SizedBox(height: 25.0, child: VerticalDivider(thickness: 1, color: Colors.black)),
-                        const SizedBox(width: 25.0),
-                        Flexible(
-                          flex: 0,
-                          child: snapshot.data!.editingUserType!
-                              ? Row(
-                                  children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          globals.reduxStore.dispatch(SaveIsStudentAction());
-                                          // globals.reduxStore.dispatch(
-                                          //     FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
-                                          // setState(() {
-                                          //   _edit = false;
-                                          // });
-                                        },
-                                        icon: Icon(Icons.save)),
-                                    IconButton(
-                                        onPressed: () {
-                                          // globals.reduxStore.dispatch(SaveIsStudentAction());
-                                          globals.reduxStore.dispatch(ToggleEditingUserTypeAction());
-                                          // setState(() {
-                                          //   _edit = false;
-                                          // });
-                                        },
-                                        icon: Icon(Icons.cancel)),
-                                  ],
-                                )
-                              : IconButton(
-                                  onPressed: () {
-                                    globals.reduxStore.dispatch(ToggleEditingUserTypeAction());
-
-                                    // setState(() {
-                                    //   _edit = !_edit;
-                                    // });
-                                  },
-                                  icon: const Icon(Icons.edit),
-                                ),
+                flex: 0,
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    if (_editingUser != true)
+                      Flexible(
+                        flex: 0,
+                        child: IconButton(
+                          onPressed: () {
+                            globals.reduxStore.dispatch(ToggleEditingUserAction(true));
+                          },
+                          icon: const Icon(Icons.edit),
                         ),
-                        const Spacer(),
+                      ),
+                    const SizedBox(height: 10.0),
+                    if (_editingUser == true)
+                      Flexible(
+                        flex: 0,
+                        child: Row(
+                          children: [
+                            IconButton(
+                                onPressed: () {
+                                  globals.reduxStore.dispatch(SaveUserDataAction());
+                                },
+                                icon: const Icon(Icons.save)),
+                            IconButton(
+                                onPressed: () {
+                                  globals.reduxStore.dispatch(ToggleEditingUserAction(false));
+                                },
+                                icon: const Icon(Icons.cancel)),
+                          ],
+                        ),
+                      ),
+                    const Spacer(),
+                  ],
+                )),
+            () {
+              if (_editingUser == true) {
+                return const Flexible(flex: 0, child: EditUserType());
+              } else {
+                return const Flexible(flex: 0, child: UserType());
+              }
+            }(),
+            const SizedBox(height: 10.0),
+            () {
+              if (_editingUser == true) {
+                return const Flexible(flex: 0, child: SetEarnedHours());
+              } else {
+                return Flexible(
+                    flex: 0,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Total Earned Hours: $_totalEarnedHours'),
                       ],
-                    );
-                  }
-                  return Placeholder();
-                },
-              ),
-            ),
+                    ));
+              }
+            }(),
           ],
         ),
       ),
