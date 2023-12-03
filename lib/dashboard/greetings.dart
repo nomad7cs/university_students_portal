@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:univ_port_app/globals.dart' as globals;
 
 class DashboardGreetings extends StatefulWidget {
@@ -32,39 +33,53 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
 
   @override
   Widget build(BuildContext context) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('yyyy-MM-dd – kk:mm').format(now);
     return Row(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Flexible(
-            flex: 3,
+            flex: 5,
+            fit: FlexFit.loose,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    'Hello, ${_username ?? ""}',
-                    style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text(
+                      'Hello, ${_username ?? ""}',
+                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+                    ),
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.only(left: 15),
-                  child: Text(
-                    '2-10-2023',
-                    style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
+                Flexible(
+                  child: Container(
+                    padding: const EdgeInsets.only(left: 15),
+                    child: Text(
+                      formattedDate,
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
+                    ),
                   ),
                 ),
               ],
             )),
         Flexible(
-            flex: 1,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 170,
+          flex: 3,
+          fit: FlexFit.loose,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Flexible(
+                fit: FlexFit.loose,
+                child: SizedBox(
+                  //   width: 170,
                   height: 35,
                   child: TextFormField(
                     decoration: InputDecoration(
@@ -76,10 +91,12 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
                         prefixIcon: const Icon(Icons.search)),
                   ),
                 ),
-                const SizedBox(width: 10),
-                const Icon(Icons.notifications_none)
-              ],
-            )),
+              ),
+              const SizedBox(width: 5),
+              const Icon(Icons.notifications_none)
+            ],
+          ),
+        ),
       ],
     );
   }

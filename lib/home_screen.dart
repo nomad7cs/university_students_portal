@@ -17,6 +17,8 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final MediaQueryData mediaQuery = MediaQuery.of(context);
+    final bool isSmallScreen = mediaQuery.size.width < 600.0;
     return Scaffold(
       // appBar: PreferredSize(
       //   preferredSize: const Size.fromHeight(100),
@@ -26,23 +28,32 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const AppDrawer(),
       body: SafeArea(
         top: true,
-        // child: SizedBox(
-        // height: MediaQuery.of(context).size.height,// - AppBar().preferredSize.height,
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          // padding: const EdgeInsets.only(right: 15.0, left: 15.0),
-          padding: const EdgeInsets.all(15.0),
-          children: const [
-            Row(
+
+        child: SingleChildScrollView(child: () {
+          if (isSmallScreen) {
+            return const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              // mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Expanded(flex: 5, child: DashboardDetails()),
-                SizedBox(width: 15.0),
-                Expanded(flex: 2, child: Upcomings()),
+                Flexible(fit: FlexFit.loose, child: DashboardDetails()),
+                SizedBox(height: 10.0),
+                Flexible(fit: FlexFit.loose, child: Upcomings()),
               ],
-            ),
-          ],
-        ),
+            );
+          } else {
+            return const Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
+              // mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Flexible(flex: 5, fit: FlexFit.loose, child: DashboardDetails()),
+                SizedBox(width: 15.0),
+                Flexible(flex: 2, fit: FlexFit.loose, child: Upcomings()),
+              ],
+            );
+          }
+        }()),
         // ),
       ),
     );
