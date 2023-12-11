@@ -19,14 +19,16 @@ class RequestScreen extends StatefulWidget {
 class _RequestScreenState extends State<RequestScreen> {
   late StreamSubscription _subscription;
   // int? _payload;
-  int? creditHours;
+  int? _creditHours;
 
   @override
   void initState() {
     super.initState();
     globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
     _subscription = globals.reduxStore.onChange.listen((event) {
-      creditHours = event.totalEarnedHours ?? 0;
+      setState(() {
+        _creditHours = event.totalEarnedHours ?? 0;
+      });
       // if (event.earnedHoursPayload == null) {
       //   _payload = event.totalEarnedHours;
       // } else {
@@ -50,7 +52,6 @@ class _RequestScreenState extends State<RequestScreen> {
           top: true,
           child: Container(
               alignment: Alignment.center,
-              // width: double.infinity,
               color: const Color.fromARGB(255, 188, 233, 255),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,29 +82,26 @@ class _RequestScreenState extends State<RequestScreen> {
                           Row(
                             children: [
                               Container(
-                                padding: const EdgeInsets.all(15),
-                                width: 170,
-                                // height: 20,
-                                // color: Colors.grey,
-                                child: const LinearProgressIndicator(
-                                  color: Colors.deepOrange,
-                                  backgroundColor: Colors.black38,
-                                  value: 1,
-                                ),
-                              ),
+                                  padding: const EdgeInsets.all(15),
+                                  width: 170,
+                                  child: const LinearProgressIndicator(
+                                    color: Colors.deepOrange,
+                                    backgroundColor: Colors.black38,
+                                    value: 0.5,
+                                  ))
                             ],
                           ),
                           Row(
                             children: [
                               Container(
                                 padding: const EdgeInsets.only(left: 15),
-                                child: const Text('Progress: 100%'),
+                                child: const Text('Progress: 50%'),
                               )
                             ],
                           ),
                           const Row(
                             children: [
-                              Text('Your request is ready to deliver!'),
+                              Text('Proceed to payment, please!'),
                             ],
                           ),
                         ],
@@ -116,8 +114,6 @@ class _RequestScreenState extends State<RequestScreen> {
                               Container(
                                 padding: const EdgeInsets.all(15),
                                 width: 170,
-                                // height: 20,
-                                // color: Colors.grey,
                                 child: const LinearProgressIndicator(
                                   color: Colors.deepOrange,
                                   backgroundColor: Colors.black38,
@@ -143,8 +139,6 @@ class _RequestScreenState extends State<RequestScreen> {
                       );
                     }
                   }(),
-
-                  // Text('Request Follow Up')
                   const CircleAvatar(
                     radius: 75,
                     backgroundImage: AssetImage('assets/img/gear-computer-icons-symbol-follow-up-org.png'),
@@ -158,20 +152,33 @@ class _RequestScreenState extends State<RequestScreen> {
                   const SizedBox(
                     height: 50.0,
                   ),
-                  FilledButton(onPressed: () {}, child: const Text('Check')),
-                  const SizedBox(
-                    height: 50.0,
-                  ),
-                  FilledButton(onPressed: () {}, child: const Text('Payment')),
-                  const SizedBox(
-                    height: 100.0,
-                  ),
+                  () {
+                    if ((_creditHours != null) && (_creditHours! > 100)) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          FilledButton(
+                            onPressed: () {
+                              globals.reduxStore.dispatch(NavigateToUrlAction('/payment'));
+                            },
+                            child: const Text('Payment'),
+                          ),
+                          const SizedBox(
+                            height: 100.0,
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }(),
                   const Icon(Icons.history_edu, size: 70),
-                  TextButton(onPressed: () {}, child: const Text('Go to All Services')),
-
-                  //  Check
-                  // Upload Files
-                  // Update Data
+                  TextButton(
+                      onPressed: () {
+                        globals.reduxStore.dispatch(NavigateToUrlAction('/services'));
+                      },
+                      child: const Text('Go to All Services')),
                 ],
               ))),
     );

@@ -9,6 +9,7 @@ import 'package:univ_port_app/custom_profile_screen.dart';
 import 'package:univ_port_app/globals.dart' as globals;
 import 'package:univ_port_app/home_screen.dart';
 import 'package:univ_port_app/login_screen.dart';
+import 'package:univ_port_app/payment_screen.dart';
 import 'package:univ_port_app/request_papers/request_screen.dart';
 
 import '../request_papers/services_requests.dart';
@@ -78,6 +79,8 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
           return const MaterialPage(key: ValueKey('Profile'), child: CustomProfileScreen());
         case '/admin':
           return const MaterialPage(key: ValueKey('Admin'), child: AdminScreen());
+        case '/payment':
+          return const MaterialPage(key: ValueKey('PaymentScreen'), child: PaymentScreen());
       }
       return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
     })

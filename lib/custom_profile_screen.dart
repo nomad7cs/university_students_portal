@@ -30,8 +30,9 @@ class _CustomProfileScreenState extends State<CustomProfileScreen> {
     _subscription = globals.reduxStore.onChange.listen((event) {
       setState(() {
         _editingUser = event.editingUser;
-        _username = event.user?.firebaseUser.displayName ?? '';
+        // _username = event.user?.firebaseUser.displayName ?? '';
         _totalEarnedHours = event.totalEarnedHours ?? 0;
+        _username = event.username ?? event.user?.firebaseUser.displayName;
       });
     });
   }
@@ -64,7 +65,7 @@ class _CustomProfileScreenState extends State<CustomProfileScreen> {
             ),
             Flexible(
               child: Text(
-                'Name: $_username',
+                'Name: ${_username ?? ''}',
                 style: const TextStyle(
                   color: Colors.black,
                   fontSize: 24,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/globals.dart' as globals;
 
 class DashboardGreetings extends StatefulWidget {
@@ -13,14 +14,19 @@ class DashboardGreetings extends StatefulWidget {
 
 class _DashboardGreetingsState extends State<DashboardGreetings> {
   late StreamSubscription _subscription;
-  String? _username;
+  String? _username = globals.reduxStore.state.username;
 
   @override
   void initState() {
     super.initState();
+    globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
     _subscription = globals.reduxStore.onChange.listen((event) {
       setState(() {
-        _username = event.user?.firebaseUser.displayName;
+        if (event.username == null) {
+          _username = event.user?.firebaseUser.displayName;
+        } else {
+          _username = event.username;
+        }
       });
     });
   }

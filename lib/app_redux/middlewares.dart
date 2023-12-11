@@ -55,9 +55,26 @@ void fetchTodosMiddleware(Store<MyAppState> store, action, NextDispatcher next) 
         .get()
         .then((documentSnapshot) {
       if (documentSnapshot.docs.isNotEmpty) {
+        String? displayName;
+        if (globals.reduxStore.state.namePayload != null) {
+          displayName = globals.reduxStore.state.namePayload;
+        } else if (globals.reduxStore.state.username != null) {
+          displayName = globals.reduxStore.state.username;
+        } else if (globals.reduxStore.state.user!.firebaseUser.displayName != null) {
+          displayName = globals.reduxStore.state.user!.firebaseUser.displayName;
+        } else {
+          displayName = '';
+        }
+        bool? isSt;
+        if (globals.reduxStore.state.isStudentPayload != null) {
+          isSt = globals.reduxStore.state.isStudentPayload;
+        } else if (globals.reduxStore.state.isStudent != null) {
+          globals.reduxStore.state.isStudent;
+        }
         documentSnapshot.docs[0].reference.update({
-          'isStudent': globals.reduxStore.state.isStudentPayload,
-          'totalEarnedHours': globals.reduxStore.state.earnedHoursPayload,
+          'displayName': displayName,
+          'isStudent': isSt ?? true,
+          'totalEarnedHours': globals.reduxStore.state.earnedHoursPayload ?? globals.reduxStore.state.totalEarnedHours,
         }).then((value) {
           if (kDebugMode) {
             print('\x1B[33mUser\'s data are created successfully\x1B[0m');
@@ -65,19 +82,19 @@ void fetchTodosMiddleware(Store<MyAppState> store, action, NextDispatcher next) 
           globals.reduxStore.dispatch(ToggleEditingUserAction(false));
           globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
         });
-      } else {
-        FirebaseFirestore.instance.collection('users').doc().set({
-          'uid': globals.reduxStore.state.user?.firebaseUser.uid,
-          'isStudent': globals.reduxStore.state.isStudentPayload,
-          'totalEarnedHours': globals.reduxStore.state.earnedHoursPayload,
-        }).then((value) {
-          if (kDebugMode) {
-            print('\x1B[33mUser\'s data are updated successfully\x1B[0m');
-          }
-          globals.reduxStore.dispatch(ToggleEditingUserAction(false));
-          globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
-        });
-      }
+      } //else {
+      //   FirebaseFirestore.instance.collection('users').doc().set({
+      //     'uid': globals.reduxStore.state.user?.firebaseUser.uid,
+      //     'isStudent': globals.reduxStore.state.isStudentPayload,
+      //     'totalEarnedHours': globals.reduxStore.state.earnedHoursPayload,
+      //   }).then((value) {
+      //     if (kDebugMode) {
+      //       print('\x1B[33mUser\'s data are updated successfully\x1B[0m');
+      //     }
+      //     globals.reduxStore.dispatch(ToggleEditingUserAction(false));
+      //     globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
+      //   });
+      // }
     }).catchError((error) {
       // error.
       // store.dispatch(XxxxxxFailedAction(error));
@@ -92,22 +109,25 @@ void fetchTodosMiddleware(Store<MyAppState> store, action, NextDispatcher next) 
 
     FirebaseFirestore.instance.collection('users').where('uid', isEqualTo: action.uid).get().then((documentSnapshot) {
       if (documentSnapshot.docs.isNotEmpty) {
-        // if (kDebugMode) {
-        //   print('event.docs[0][isStudent]:');
-        //   print(event.docs[0]['isStudent']);
-        // }
         bool? isStudent;
         int? totalEarnedHours;
-        if (documentSnapshot.docs[0].data().containsKey('isStudent')) {
-          isStudent = documentSnapshot.docs[0]['isStudent'];
-        }
-        if (documentSnapshot.docs[0].data().containsKey('totalEarnedHours')) {
-          totalEarnedHours = documentSnapshot.docs[0]['totalEarnedHours'];
-        }
+        String? username;
+        // if (documentSnapshot.docs[0].data().containsKey('isStudent')) {
+        isStudent = documentSnapshot.docs[0]['isStudent'];
+        // }
+        // if (documentSnapshot.docs[0].data().containsKey('totalEarnedHours')) {
+        totalEarnedHours = documentSnapshot.docs[0]['totalEarnedHours'];
+        // }
+        // if (documentSnapshot.docs[0].data().containsKey('displayName')) {
+        username = documentSnapshot.docs[0]['displayName'];
+        print('*****************************************************************************Name:');
+        print(username);
+        // }
 
         store.dispatch(FetchExtraUserInfoSucceededAction(
-          isStudent,
-          totalEarnedHours,
+          username: username,
+          isStudent: isStudent,
+          totalEarnedHours: totalEarnedHours,
         ));
       }
     }).catchError((error) {

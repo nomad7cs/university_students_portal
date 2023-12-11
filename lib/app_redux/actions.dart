@@ -68,10 +68,18 @@ class FetchExtraUserInfoAction {
   FetchExtraUserInfoAction({required this.uid});
 }
 
+class SetUserNamePayloadAction {
+  final String namePayload;
+
+  SetUserNamePayloadAction(this.namePayload);
+}
+
 class FetchExtraUserInfoSucceededAction {
+  String? username;
+  String? email;
   bool? isStudent;
   int? totalEarnedHours;
-  FetchExtraUserInfoSucceededAction(this.isStudent, this.totalEarnedHours);
+  FetchExtraUserInfoSucceededAction({this.username, this.email, this.isStudent, this.totalEarnedHours});
 }
 
 class FetchExtraUserInfoFailedAction {

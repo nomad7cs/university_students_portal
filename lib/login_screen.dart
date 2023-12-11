@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +28,21 @@ class _LoginScreenState extends State<LoginScreen> {
         AuthStateChangeAction<SignedIn>((context, state) {
           globals.reduxStore.dispatch(UserLoggedInAction(state.user));
           globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: state.user!.uid));
-          globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
+          globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
           // Navigator.pushReplacementNamed(context, '/profile');
+        }),
+        AuthStateChangeAction<UserCreated>((context, state) {
+          FirebaseFirestore.instance.collection('users').doc().set({
+            'uid': state.credential.user!.uid,
+            'email': state.credential.user!.email,
+            'displayName': state.credential.user!.displayName ?? '',
+            'isStudent': true,
+            'totalEarnedHours': 0,
+          }).then(
+            (value) {
+              globals.reduxStore.dispatch(NavigateToUrlAction('/home'));
+            },
+          );
         }),
       ],
       headerBuilder: (context, constraints, shrinkOffset) {

@@ -45,6 +45,8 @@ MyAppState appReducer(MyAppState state, action) {
         unknownUrl: state.unknownUrl,
         editingUser: state.editingUser,
         totalEarnedHours: state.totalEarnedHours,
+        username: state.username,
+        namePayload: state.namePayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is UserLoggedInAction) {
     if (kDebugMode) {
@@ -61,6 +63,8 @@ MyAppState appReducer(MyAppState state, action) {
         unknownUrl: state.unknownUrl,
         editingUser: state.editingUser,
         totalEarnedHours: state.totalEarnedHours,
+        username: state.username,
+        namePayload: state.namePayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is UserLoggedOutAction) {
     if (kDebugMode) {
@@ -73,9 +77,10 @@ MyAppState appReducer(MyAppState state, action) {
         todayCourses: null,
         studentCourses: null,
         isStudent: null,
-        isStudentPayload: state.isStudentPayload,
+        isStudentPayload: null,
         unknownUrl: state.unknownUrl,
-        editingUser: state.editingUser,
+        editingUser: false,
+        username: null,
         totalEarnedHours: null,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchCoursesAction) {
@@ -100,6 +105,8 @@ MyAppState appReducer(MyAppState state, action) {
         unknownUrl: state.unknownUrl,
         editingUser: state.editingUser,
         totalEarnedHours: state.totalEarnedHours,
+        username: state.username,
+        namePayload: state.namePayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchCoursesFailedAction) {
     if (kDebugMode) {
@@ -129,6 +136,8 @@ MyAppState appReducer(MyAppState state, action) {
         unknownUrl: state.unknownUrl,
         editingUser: state.editingUser,
         totalEarnedHours: state.totalEarnedHours,
+        username: state.username,
+        namePayload: state.namePayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchTodayClassesFailedAction) {
     if (kDebugMode) {
@@ -151,6 +160,8 @@ MyAppState appReducer(MyAppState state, action) {
         unknownUrl: state.unknownUrl,
         editingUser: action.payload,
         totalEarnedHours: state.totalEarnedHours,
+        namePayload: state.namePayload,
+        username: state.username,
         stateCounter: state.stateCounter + 1);
   } else if (action is SetTypeStudentPayloadAction) {
     if (kDebugMode) {
@@ -167,6 +178,8 @@ MyAppState appReducer(MyAppState state, action) {
       unknownUrl: state.unknownUrl,
       editingUser: state.editingUser,
       totalEarnedHours: state.totalEarnedHours,
+      username: state.username,
+      namePayload: state.namePayload,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is FetchExtraUserInfoAction) {
@@ -177,7 +190,7 @@ MyAppState appReducer(MyAppState state, action) {
     return state;
   } else if (action is FetchExtraUserInfoSucceededAction) {
     if (kDebugMode) {
-      print('\x1B[32mFetchExtraUserInfoSucceededAction\x1B[0m');
+      print('\x1B[32mFetchExtraUserInfoSucceededAction ${action.username}\x1B[0m');
     }
     return MyAppState(
         currentUrl: state.currentUrl,
@@ -191,6 +204,8 @@ MyAppState appReducer(MyAppState state, action) {
         editingUser: state.editingUser,
         totalEarnedHours: action.totalEarnedHours,
         earnedHoursPayload: state.earnedHoursPayload,
+        namePayload: state.namePayload,
+        username: action.username,
         stateCounter: state.stateCounter + 1);
   } else if (action is SaveUserDataAction) {
     if (kDebugMode) {
@@ -209,11 +224,31 @@ MyAppState appReducer(MyAppState state, action) {
       isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
       editingUser: state.editingUser,
+      username: state.username,
       totalEarnedHours: state.totalEarnedHours,
       earnedHoursPayload: action.payload,
+      namePayload: state.namePayload,
+      stateCounter: state.stateCounter + 1,
+    );
+  } else if (action is SetUserNamePayloadAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
+      unknownUrl: state.unknownUrl,
+      username: state.username,
+      editingUser: state.editingUser,
+      totalEarnedHours: state.totalEarnedHours,
+      earnedHoursPayload: state.earnedHoursPayload,
+      namePayload: action.namePayload,
       stateCounter: state.stateCounter + 1,
     );
   }
+
   if (kDebugMode) {
     print('\x1B[32mNoooooooooooooooooooooooooooo Actionnnnnnnnnnnnnnnnnn selected\x1B[0m');
     print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');

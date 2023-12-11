@@ -19,9 +19,15 @@ class _AppDrawerState extends State<AppDrawer> {
   @override
   void initState() {
     super.initState();
+    globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
     _subscription = globals.reduxStore.onChange.listen((event) {
       setState(() {
-        _username = event.user?.firebaseUser.displayName;
+        if (event.username == null) {
+          _username = event.user?.firebaseUser.displayName;
+        } else {
+          _username = event.username;
+        }
+        print('--------------------------------$_username--------------------------');
       });
     });
   }
@@ -88,13 +94,13 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: const Icon(Icons.menu_book_rounded),
             title: const Text('Courses'),
           ),
-          ListTile(
-            onTap: () {
-              // globals.store.dispatch(NavigateToUrlAction('/payment'));
-            },
-            leading: const Icon(Icons.payment),
-            title: const Text('Payment'),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     // globals.store.dispatch(NavigateToUrlAction('/payment'));
+          //   },
+          //   leading: const Icon(Icons.payment),
+          //   title: const Text('Payment'),
+          // ),
           ListTile(
             onTap: () {
               globals.reduxStore.dispatch(NavigateToUrlAction('/services'));
@@ -110,7 +116,10 @@ class _AppDrawerState extends State<AppDrawer> {
             title: const Text('Settings'),
           ),
           ListTile(
-            onTap: () {},
+            onTap: () {
+              globals.reduxStore.dispatch(UserLoggedOutAction());
+              globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+            },
             leading: const Icon(Icons.logout_rounded),
             title: const Text('Logout'),
           ),
@@ -119,7 +128,7 @@ class _AppDrawerState extends State<AppDrawer> {
               globals.reduxStore.dispatch(NavigateToUrlAction('/admin'));
             },
             leading: const Icon(Icons.edit),
-            title: const Text('Add/Remove Classrooms\n(POC)'),
+            title: const Text('Admin'),
           ),
         ],
       ),
