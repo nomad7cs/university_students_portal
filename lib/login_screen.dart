@@ -44,6 +44,10 @@ class _LoginScreenState extends State<LoginScreen> {
             },
           );
         }),
+        // AuthStateChangeAction<UserLoggedOutAction>((context,state) {
+        //   globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+        //   // Navigator.of(context).pop();
+        // }),
       ],
       headerBuilder: (context, constraints, shrinkOffset) {
         return Padding(

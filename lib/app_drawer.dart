@@ -115,14 +115,17 @@ class _AppDrawerState extends State<AppDrawer> {
             leading: const Icon(Icons.settings),
             title: const Text('Settings'),
           ),
-          ListTile(
-            onTap: () {
-              globals.reduxStore.dispatch(UserLoggedOutAction());
-              globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
-            },
-            leading: const Icon(Icons.logout_rounded),
-            title: const Text('Logout'),
-          ),
+          // const SignOutButton(),
+          // ListTile(
+          //   onTap: () {
+          //     FirebaseUIAuth.signOut(context: context).then((value) {
+          //       globals.reduxStore.dispatch(UserLoggedOutAction());
+          //       globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+          //     });
+          //   },
+          //   leading: const Icon(Icons.logout_rounded),
+          //   title: const Text('Logout'),
+          // ),
           ListTile(
             onTap: () {
               globals.reduxStore.dispatch(NavigateToUrlAction('/admin'));

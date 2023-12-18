@@ -29,15 +29,23 @@ class _UsersListState extends State<UsersList> {
             if (snapshot.hasError) {
               return const Text('Error fetching users');
             } else {
-              final usersDocs = snapshot.data!.docs;
               // print('\x1B[31m ------------------- users:\x1B[0m ${snapshot.data.docs[0]['totalEarnedHours']}');
-              return ListView.builder(
-                itemCount: usersDocs.length,
-                itemBuilder: (BuildContext context, int index) {
-                  final userDoc = usersDocs[index];
-                  return UserListCard(user: userDoc);
-                },
-              );
+              if (snapshot.data != null && snapshot.data.docs.length > 0) {
+                final usersDocs = snapshot.data.docs;
+                print(
+                    'snapshot.data.docs: ${snapshot.data.docs}, length: ${usersDocs.length}----------------------------------------------------------------------------------------------------------------');
+                // return Container();
+
+                return ListView.builder(
+                  itemCount: usersDocs.length,
+                  itemBuilder: (context, index) {
+                    // final userDoc = usersDocs[index];
+                    // return Placeholder();
+                    return UserListCard(user: usersDocs[index]);
+                  },
+                );
+              }
+              return const Text('Unknown error, fetching users');
             }
           } else {
             return const Text('Unknown error, fetching users');

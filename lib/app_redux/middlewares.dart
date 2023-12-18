@@ -7,6 +7,12 @@ import 'package:univ_port_app/globals.dart' as globals;
 import 'actions.dart';
 
 void fetchTodosMiddleware(Store<MyAppState> store, action, NextDispatcher next) {
+  // if (action is UserLoggedOutAction) {
+  //   FirebaseUIAuth.signOut(context: context).then((value) {
+  //     // Optionally, navigate back to the sign-in screen
+  //     Navigator.of(context).pushReplacementNamed('/sign-in');
+  //   });
+  // } else
   if (action is FetchTodayClassesAction) {
     /*
     TODO: rebuild
