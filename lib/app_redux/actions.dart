@@ -21,6 +21,16 @@ class UserLoggedInAction {
   UserLoggedInAction(this.user);
 }
 
+class SetCurrentServiceNameAction {
+  final String name;
+  SetCurrentServiceNameAction(this.name);
+}
+
+class SetCurrentServiceMinRequiredHoursAction {
+  final int minRequiredHours;
+  SetCurrentServiceMinRequiredHoursAction(this.minRequiredHours);
+}
+
 class UserLoggedOutAction {
   UserLoggedOutAction();
 }

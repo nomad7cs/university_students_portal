@@ -23,7 +23,7 @@ class _TodayClassesState extends State<TodayClasses> {
     return StreamBuilder<List<ClassroomSlot>?>(
         stream: globals.reduxStore.onChange.map((event) => event.todayCourses),
         builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+          if ((snapshot.data != null) && snapshot.data!.isNotEmpty) {
             return Container(
               padding: const EdgeInsets.all(10.0),
               decoration: BoxDecoration(

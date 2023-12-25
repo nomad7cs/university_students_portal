@@ -16,6 +16,8 @@ class MyAppState {
   int? earnedHoursPayload;
   String? namePayload;
   String? username;
+  int? currentServiceMinRequiredHours;
+  String? currentServiceName;
   int stateCounter;
 
   MyAppState({
@@ -33,6 +35,8 @@ class MyAppState {
     this.earnedHoursPayload,
     this.namePayload,
     this.username,
+    this.currentServiceMinRequiredHours,
+    this.currentServiceName,
     this.stateCounter = 1,
   }) {
     if (kDebugMode) {

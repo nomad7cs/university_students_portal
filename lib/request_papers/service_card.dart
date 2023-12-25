@@ -6,8 +6,10 @@ class ServiceCard extends StatelessWidget {
   final String title;
   final String translation;
   final String price;
+  final int serviceMinRequiredHours;
 
-  const ServiceCard({super.key, required this.title, required this.translation, required this.price});
+  const ServiceCard(
+      {super.key, required this.title, required this.translation, required this.price, required this.serviceMinRequiredHours});
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,8 @@ class ServiceCard extends StatelessWidget {
                     width: MediaQuery.of(context).size.width < 350 ? 100 : 150,
                     child: FilledButton(
                         onPressed: () {
+                          globals.reduxStore.dispatch(SetCurrentServiceNameAction(translation));
+                          globals.reduxStore.dispatch(SetCurrentServiceMinRequiredHoursAction(serviceMinRequiredHours));
                           globals.reduxStore.dispatch(NavigateToUrlAction('/request_paper'));
                         },
                         child: const Text('Request')),

@@ -8,17 +8,16 @@ import '../app_drawer.dart';
 import '../custom_appbar.dart';
 
 class RequestScreen extends StatefulWidget {
-  final String serviceName;
-
-  const RequestScreen({super.key, required this.serviceName});
+  const RequestScreen({super.key});
 
   @override
   State<RequestScreen> createState() => _RequestScreenState();
 }
 
 class _RequestScreenState extends State<RequestScreen> {
+  late String? serviceName;
   late StreamSubscription _subscription;
-  // int? _payload;
+  int? _minRequiredHours;
   int? _creditHours;
 
   @override
@@ -27,6 +26,8 @@ class _RequestScreenState extends State<RequestScreen> {
     globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
     _subscription = globals.reduxStore.onChange.listen((event) {
       setState(() {
+        serviceName = event.currentServiceName;
+        _minRequiredHours = event.currentServiceMinRequiredHours;
         _creditHours = event.totalEarnedHours ?? 0;
       });
       // if (event.earnedHoursPayload == null) {
@@ -65,7 +66,7 @@ class _RequestScreenState extends State<RequestScreen> {
                       Container(
                         padding: const EdgeInsets.all(15),
                         child: Text(
-                          widget.serviceName,
+                          serviceName ?? '',
                           style: const TextStyle(
                             // color: Colors.white,
                             fontSize: 24,
@@ -76,9 +77,13 @@ class _RequestScreenState extends State<RequestScreen> {
                   ),
                   () {
                     int? creditHours = globals.reduxStore.state.totalEarnedHours;
-                    if ((creditHours != null) && (creditHours > 100)) {
+                    if ((creditHours != null) && (_minRequiredHours != null) && (creditHours >= _minRequiredHours!)) {
                       return Column(
                         children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text('Min Required hours: ${_minRequiredHours.toString()}'),
+                          ),
                           Row(
                             children: [
                               Container(
@@ -109,6 +114,10 @@ class _RequestScreenState extends State<RequestScreen> {
                     } else {
                       return Column(
                         children: [
+                          Align(
+                            child: Text('Min Required hours: ${_minRequiredHours.toString()}'),
+                            alignment: Alignment.centerLeft,
+                          ),
                           Row(
                             children: [
                               Container(
@@ -153,7 +162,7 @@ class _RequestScreenState extends State<RequestScreen> {
                     height: 50.0,
                   ),
                   () {
-                    if ((_creditHours != null) && (_creditHours! > 100)) {
+                    if ((_creditHours != null) && (_minRequiredHours != null) && (_creditHours! >= _minRequiredHours!)) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         mainAxisSize: MainAxisSize.min,

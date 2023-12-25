@@ -28,7 +28,7 @@ class _AdminScreenState extends State<AdminScreen> {
             stream: globals.reduxStore.onChange.map((state) => state.user),
             initialData: globals.reduxStore.state.user,
             builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
-              if ((snapshot.hasData) && (snapshot.data != null) && (snapshot.data!.firebaseUser.email == 'test@test.com')) {
+              if ((snapshot.data != null) && (snapshot.data!.firebaseUser.email == 'test@test.com')) {
                 // TODO: Add condition for certain users to use admin screen
                 return Container(padding: const EdgeInsets.fromLTRB(350, 5, 350, 5), child: const UsersList());
               }

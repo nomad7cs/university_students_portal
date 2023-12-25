@@ -74,7 +74,7 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
         case '/services':
           return const MaterialPage(key: ValueKey('ServicesScreen'), child: ServicesScreen());
         case '/request_paper':
-          return const MaterialPage(key: ValueKey('RequestPaper'), child: RequestScreen(serviceName: 'بيان حالة'));
+          return const MaterialPage(key: ValueKey('RequestPaper'), child: RequestScreen());
         case '/profile':
           return const MaterialPage(key: ValueKey('Profile'), child: CustomProfileScreen());
         case '/admin':

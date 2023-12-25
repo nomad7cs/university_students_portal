@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/app_redux/app_state.dart';
 import 'package:univ_port_app/globals.dart' as globals;
@@ -14,6 +16,20 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _CustomAppBarState extends State<CustomAppBar> {
+  Future<void> _signOut() async {
+    globals.reduxStore.dispatch(UserLoggedOutAction());
+    globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+    try {
+      await FirebaseAuth.instance.signOut();
+      // If using Google sign-in, also sign out from Google:
+      await GoogleSignIn().signOut();
+      // Optionally, navigate to a different screen or display a success message
+    } catch (error) {
+      // Handle errors gracefully
+      print(error);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return PreferredSize(
@@ -55,10 +71,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                 builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
                   if (snapshot.data != null) {
                     return IconButton(
-                      icon: const Icon(Icons.account_circle),
-                      onPressed: () {
-                        globals.reduxStore.dispatch(NavigateToUrlAction('/profile'));
-                      }, // TODO: Implement a dropdown or navigate to profile
+                      icon: const Icon(Icons.logout),
+                      onPressed: _signOut, // TODO: Implement a dropdown or navigate to profile
                     );
                   }
                   return IconButton(

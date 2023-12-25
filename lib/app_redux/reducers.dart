@@ -47,6 +47,8 @@ MyAppState appReducer(MyAppState state, action) {
         totalEarnedHours: state.totalEarnedHours,
         username: state.username,
         namePayload: state.namePayload,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is UserLoggedInAction) {
     if (kDebugMode) {
@@ -65,6 +67,8 @@ MyAppState appReducer(MyAppState state, action) {
         totalEarnedHours: state.totalEarnedHours,
         username: state.username,
         namePayload: state.namePayload,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is UserLoggedOutAction) {
     if (kDebugMode) {
@@ -82,6 +86,10 @@ MyAppState appReducer(MyAppState state, action) {
         editingUser: false,
         username: null,
         totalEarnedHours: null,
+        earnedHoursPayload: null,
+        namePayload: null,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchCoursesAction) {
     if (kDebugMode) {
@@ -107,6 +115,8 @@ MyAppState appReducer(MyAppState state, action) {
         totalEarnedHours: state.totalEarnedHours,
         username: state.username,
         namePayload: state.namePayload,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchCoursesFailedAction) {
     if (kDebugMode) {
@@ -138,6 +148,8 @@ MyAppState appReducer(MyAppState state, action) {
         totalEarnedHours: state.totalEarnedHours,
         username: state.username,
         namePayload: state.namePayload,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchTodayClassesFailedAction) {
     if (kDebugMode) {
@@ -162,6 +174,8 @@ MyAppState appReducer(MyAppState state, action) {
         totalEarnedHours: state.totalEarnedHours,
         namePayload: state.namePayload,
         username: state.username,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is SetTypeStudentPayloadAction) {
     if (kDebugMode) {
@@ -180,6 +194,8 @@ MyAppState appReducer(MyAppState state, action) {
       totalEarnedHours: state.totalEarnedHours,
       username: state.username,
       namePayload: state.namePayload,
+      currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+      currentServiceName: state.currentServiceName,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is FetchExtraUserInfoAction) {
@@ -206,6 +222,8 @@ MyAppState appReducer(MyAppState state, action) {
         earnedHoursPayload: state.earnedHoursPayload,
         namePayload: state.namePayload,
         username: action.username,
+        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+        currentServiceName: state.currentServiceName,
         stateCounter: state.stateCounter + 1);
   } else if (action is SaveUserDataAction) {
     if (kDebugMode) {
@@ -228,6 +246,8 @@ MyAppState appReducer(MyAppState state, action) {
       totalEarnedHours: state.totalEarnedHours,
       earnedHoursPayload: action.payload,
       namePayload: state.namePayload,
+      currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+      currentServiceName: state.currentServiceName,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is SetUserNamePayloadAction) {
@@ -245,6 +265,46 @@ MyAppState appReducer(MyAppState state, action) {
       totalEarnedHours: state.totalEarnedHours,
       earnedHoursPayload: state.earnedHoursPayload,
       namePayload: action.namePayload,
+      currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+      currentServiceName: state.currentServiceName,
+      stateCounter: state.stateCounter + 1,
+    );
+  } else if (action is SetCurrentServiceMinRequiredHoursAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
+      unknownUrl: state.unknownUrl,
+      username: state.username,
+      editingUser: state.editingUser,
+      totalEarnedHours: state.totalEarnedHours,
+      earnedHoursPayload: state.earnedHoursPayload,
+      namePayload: state.namePayload,
+      currentServiceMinRequiredHours: action.minRequiredHours,
+      currentServiceName: state.currentServiceName,
+      stateCounter: state.stateCounter + 1,
+    );
+  } else if (action is SetCurrentServiceNameAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      studentCourses: state.studentCourses,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
+      unknownUrl: state.unknownUrl,
+      username: state.username,
+      editingUser: state.editingUser,
+      totalEarnedHours: state.totalEarnedHours,
+      earnedHoursPayload: state.earnedHoursPayload,
+      namePayload: state.namePayload,
+      currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+      currentServiceName: action.name,
       stateCounter: state.stateCounter + 1,
     );
   }
