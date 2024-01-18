@@ -107,7 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       totalEarnedHours = userDoc.data()['totalEarnedHours'];
                     }
                     if (userDoc.data().containsKey('totalEarnedHours')) {
-                      courses = userDoc.data()['courses'];
+                      courses = //userDoc.data()['courses'];
+                          () {
+                        List<Course> r = [];
+                        for (var i = 0; i < userDoc.data()['courses'].length; i++) {
+                          r.add(Course(code: '', fullName: userDoc.data()['courses'][i]));
+                        }
+                        return r;
+                      }();
                     }
 
                     currentUser = Student(
@@ -130,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           () {
                         List<Course> r = [];
                         for (var i = 0; i < userDoc.data()['courses'].length; i++) {
-                          r.add(Course(code: 's', fullName: userDoc.data()['courses'][i]));
+                          r.add(Course(code: '', fullName: userDoc.data()['courses'][i]));
                         }
                         return r;
                       }(),
