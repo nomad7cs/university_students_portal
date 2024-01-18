@@ -39,7 +39,7 @@ MyAppState appReducer(MyAppState state, action) {
         currentUrlStack: [...newUrlStack],
         user: state.user,
         todayCourses: state.todayCourses,
-        studentCourses: state.studentCourses,
+        // studentCourses: state.studentCourses,
         isStudent: state.isStudent,
         isStudentPayload: state.isStudentPayload,
         unknownUrl: state.unknownUrl,
@@ -59,7 +59,7 @@ MyAppState appReducer(MyAppState state, action) {
         currentUrlStack: [...state.currentUrlStack],
         user: AppUser(firebaseUser: action.user!),
         todayCourses: state.todayCourses,
-        studentCourses: state.studentCourses,
+        // studentCourses: state.studentCourses,
         isStudent: state.isStudent,
         isStudentPayload: state.isStudentPayload,
         unknownUrl: state.unknownUrl,
@@ -79,7 +79,7 @@ MyAppState appReducer(MyAppState state, action) {
         currentUrlStack: [...state.currentUrlStack],
         user: null,
         todayCourses: null,
-        studentCourses: null,
+        // studentCourses: null,
         isStudent: null,
         isStudentPayload: null,
         unknownUrl: state.unknownUrl,
@@ -98,66 +98,71 @@ MyAppState appReducer(MyAppState state, action) {
     }
     // TODO: Use a 'fetching' state
     return state;
-  } else if (action is FetchCoursesSucceededAction) {
-    if (kDebugMode) {
-      print('\x1B[32mFetchCoursesSucceededAction\x1B[0m');
-    }
-    return MyAppState(
-        currentUrl: state.currentUrl,
-        currentUrlStack: [...state.currentUrlStack],
-        user: state.user,
-        todayCourses: state.todayCourses,
-        studentCourses: action.courses,
-        isStudent: state.isStudent,
-        isStudentPayload: state.isStudentPayload,
-        unknownUrl: state.unknownUrl,
-        editingUser: state.editingUser,
-        totalEarnedHours: state.totalEarnedHours,
-        username: state.username,
-        namePayload: state.namePayload,
-        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
-        currentServiceName: state.currentServiceName,
-        stateCounter: state.stateCounter + 1);
-  } else if (action is FetchCoursesFailedAction) {
-    if (kDebugMode) {
-      print('\x1B[32mFetchCoursesFailedAction\x1B[0m');
-      print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');
-    }
-    return state;
-  } else if (action is FetchTodayClassesAction) {
-    if (kDebugMode) {
-      print('\x1B[32mFetchTodayClassesAction\x1B[0m');
-      print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');
-    }
-    // TODO: Use a 'fetching' state
-    return state;
-  } else if (action is FetchTodayClassesSucceededAction) {
-    if (kDebugMode) {
-      print('\x1B[32mFetchTodayClassesSucceededAction\x1B[0m');
-    }
-    return MyAppState(
-        currentUrl: state.currentUrl,
-        currentUrlStack: [...state.currentUrlStack],
-        user: state.user,
-        todayCourses: action.todayClasses,
-        studentCourses: state.studentCourses,
-        isStudent: state.isStudent,
-        isStudentPayload: state.isStudentPayload,
-        unknownUrl: state.unknownUrl,
-        editingUser: state.editingUser,
-        totalEarnedHours: state.totalEarnedHours,
-        username: state.username,
-        namePayload: state.namePayload,
-        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
-        currentServiceName: state.currentServiceName,
-        stateCounter: state.stateCounter + 1);
-  } else if (action is FetchTodayClassesFailedAction) {
-    if (kDebugMode) {
-      print('\x1B[32mFetchTodayClassesFailedAction\x1B[0m');
-      print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');
-    }
-    return state;
-  } else if (action is ToggleEditingUserAction) {
+  }
+  // else if (action is FetchCoursesSucceededAction) {
+  //   if (kDebugMode) {
+  //     print('\x1B[32mFetchCoursesSucceededAction\x1B[0m');
+  //   }
+  //   return MyAppState(
+  //       currentUrl: state.currentUrl,
+  //       currentUrlStack: [...state.currentUrlStack],
+  //       user: state.user,
+  //       todayCourses: state.todayCourses,
+  //       studentCourses: action.courses,
+  //       isStudent: state.isStudent,
+  //       isStudentPayload: state.isStudentPayload,
+  //       unknownUrl: state.unknownUrl,
+  //       editingUser: state.editingUser,
+  //       totalEarnedHours: state.totalEarnedHours,
+  //       username: state.username,
+  //       namePayload: state.namePayload,
+  //       currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+  //       currentServiceName: state.currentServiceName,
+  //       stateCounter: state.stateCounter + 1);
+  // else if (action is FetchCoursesFailedAction) {
+  //   if (kDebugMode) {
+  //     print('\x1B[32mFetchCoursesFailedAction\x1B[0m');
+  //     print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');
+  //   }
+  //   return state;
+  // }
+  // else if (action is FetchTodayClassesAction) {
+  //   if (kDebugMode) {
+  //     print('\x1B[32mFetchTodayClassesAction\x1B[0m');
+  //     print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');
+  //   }
+  //   // TODO: Use a 'fetching' state
+  //   return state;
+  // }
+  // else if (action is FetchTodayClassesSucceededAction) {
+  //   if (kDebugMode) {
+  //     print('\x1B[32mFetchTodayClassesSucceededAction\x1B[0m');
+  //   }
+  //   return MyAppState(
+  //       currentUrl: state.currentUrl,
+  //       currentUrlStack: [...state.currentUrlStack],
+  //       user: state.user,
+  //       todayCourses: action.todayClasses,
+  //       studentCourses: state.studentCourses,
+  //       isStudent: state.isStudent,
+  //       isStudentPayload: state.isStudentPayload,
+  //       unknownUrl: state.unknownUrl,
+  //       editingUser: state.editingUser,
+  //       totalEarnedHours: state.totalEarnedHours,
+  //       username: state.username,
+  //       namePayload: state.namePayload,
+  //       currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+  //       currentServiceName: state.currentServiceName,
+  //       stateCounter: state.stateCounter + 1);
+  // }
+  // else if (action is FetchTodayClassesFailedAction) {
+  //   if (kDebugMode) {
+  //     print('\x1B[32mFetchTodayClassesFailedAction\x1B[0m');
+  //     print('\x1B[32mSAME State!!!!!!!!!\x1B[0m');
+  //   }
+  //   return state;
+  // }
+  else if (action is ToggleEditingUserAction) {
     if (kDebugMode) {
       print('\x1B[32mToggleEditingUserAction\x1B[0m');
     }
@@ -166,7 +171,7 @@ MyAppState appReducer(MyAppState state, action) {
         currentUrlStack: [...state.currentUrlStack],
         user: state.user,
         todayCourses: state.todayCourses,
-        studentCourses: state.studentCourses,
+        // studentCourses: state.studentCourses,
         isStudent: state.isStudent,
         isStudentPayload: state.isStudentPayload,
         unknownUrl: state.unknownUrl,
@@ -186,7 +191,7 @@ MyAppState appReducer(MyAppState state, action) {
       currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
-      studentCourses: state.studentCourses,
+      // studentCourses: state.studentCourses,
       isStudent: state.isStudent,
       isStudentPayload: action.payload,
       unknownUrl: state.unknownUrl,
@@ -213,7 +218,7 @@ MyAppState appReducer(MyAppState state, action) {
         currentUrlStack: [...state.currentUrlStack],
         user: state.user,
         todayCourses: state.todayCourses,
-        studentCourses: state.studentCourses,
+        // studentCourses: state.studentCourses,
         isStudent: action.isStudent,
         isStudentPayload: state.isStudentPayload,
         unknownUrl: state.unknownUrl,
@@ -237,7 +242,7 @@ MyAppState appReducer(MyAppState state, action) {
       currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
-      studentCourses: state.studentCourses,
+      // studentCourses: state.studentCourses,
       isStudent: state.isStudent,
       isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
@@ -256,7 +261,7 @@ MyAppState appReducer(MyAppState state, action) {
       currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
-      studentCourses: state.studentCourses,
+      // studentCourses: state.studentCourses,
       isStudent: state.isStudent,
       isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
@@ -275,7 +280,7 @@ MyAppState appReducer(MyAppState state, action) {
       currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
-      studentCourses: state.studentCourses,
+      // studentCourses: state.studentCourses,
       isStudent: state.isStudent,
       isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,
@@ -294,7 +299,7 @@ MyAppState appReducer(MyAppState state, action) {
       currentUrlStack: [...state.currentUrlStack],
       user: state.user,
       todayCourses: state.todayCourses,
-      studentCourses: state.studentCourses,
+      // studentCourses: state.studentCourses,
       isStudent: state.isStudent,
       isStudentPayload: state.isStudentPayload,
       unknownUrl: state.unknownUrl,

@@ -27,7 +27,6 @@ class _AppDrawerState extends State<AppDrawer> {
         } else {
           _username = event.username;
         }
-        print('--------------------------------$_username--------------------------');
       });
     });
   }
@@ -40,7 +39,6 @@ class _AppDrawerState extends State<AppDrawer> {
 
   @override
   Widget build(BuildContext context) {
-    print('\x1B[31mBuilding appdrawer\x1B[0m');
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -93,6 +91,13 @@ class _AppDrawerState extends State<AppDrawer> {
             },
             leading: const Icon(Icons.menu_book_rounded),
             title: const Text('Courses'),
+          ),
+          ListTile(
+            onTap: () {
+              globals.reduxStore.dispatch(NavigateToUrlAction('/projects'));
+            },
+            leading: const Icon(Icons.apps),
+            title: const Text('Graduation Projects'),
           ),
           // ListTile(
           //   onTap: () {

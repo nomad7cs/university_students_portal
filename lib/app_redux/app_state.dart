@@ -8,7 +8,7 @@ class MyAppState {
   bool? unknownUrl = false;
   // String? studentId;
   List<ClassroomSlot>? todayCourses;
-  List<Course>? studentCourses;
+  // List<Course>? studentCourses;
   bool? isStudent;
   bool? isStudentPayload;
   bool editingUser = false;
@@ -25,7 +25,7 @@ class MyAppState {
     required this.currentUrlStack,
     this.user,
     this.todayCourses,
-    this.studentCourses,
+    // this.studentCourses,
     // this.studentId,
     this.unknownUrl,
     this.isStudentPayload,
@@ -57,33 +57,33 @@ class MyAppState {
   // }
 }
 
-class Course {
-  String? id;
-  String code;
-  String fullName;
-  String? img;
-  // DateTime? schedule;
-
-  Course(
-      {required this.code,
-      required this.fullName,
-      // this.schedule,
-      this.id,
-      this.img});
-}
+// class Course {
+//   String? id;
+//   String code;
+//   String fullName;
+//   String? img;
+//   // DateTime? schedule;
+//
+//   Course(
+//       {required this.code,
+//       required this.fullName,
+//       // this.schedule,
+//       this.id,
+//       this.img});
+// }
 
 class AppUser {
   User firebaseUser;
   bool? isStudent;
-  Course? courses;
-  AppUser({required this.firebaseUser, this.isStudent, this.courses});
+  // Course? courses;
+  AppUser({required this.firebaseUser, this.isStudent});
 }
 
 class ClassroomSlot {
   String? id;
   String location;
   String teacher;
-  Course course;
+  // Course course;
   DateTime dateTime;
   String duration; // in Hours
   int participants;
@@ -93,7 +93,7 @@ class ClassroomSlot {
   ClassroomSlot({
     required this.location,
     required this.teacher,
-    required this.course,
+    // required this.course,
     required this.dateTime,
     // required this.capacity,
     required this.participants,

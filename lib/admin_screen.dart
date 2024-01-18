@@ -30,7 +30,44 @@ class _AdminScreenState extends State<AdminScreen> {
             builder: (BuildContext context, AsyncSnapshot<AppUser?> snapshot) {
               if ((snapshot.data != null) && (snapshot.data!.firebaseUser.email == 'test@test.com')) {
                 // TODO: Add condition for certain users to use admin screen
-                return Container(padding: const EdgeInsets.fromLTRB(350, 5, 350, 5), child: const UsersList());
+                return Container(
+                    padding: const EdgeInsets.fromLTRB(100, 5, 100, 5),
+                    child: const Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text('Students', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                              ),
+                              Flexible(child: StudentsList()),
+                            ],
+                          ),
+                        ),
+                        Flexible(fit: FlexFit.loose, child: VerticalDivider()),
+                        Flexible(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Align(
+                                alignment: Alignment.center,
+                                child: Text('Teachers', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+                              ),
+                              Flexible(child: TeachersList()),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ));
               }
               return Container(padding: const EdgeInsets.fromLTRB(250, 5, 250, 5), child: const Text('You\'re not authorized'));
             }),

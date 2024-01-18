@@ -37,10 +37,10 @@ class UserLoggedOutAction {
 
 class FetchCoursesAction {}
 
-class FetchCoursesSucceededAction {
-  List<Course> courses;
-  FetchCoursesSucceededAction(this.courses);
-}
+// class FetchCoursesSucceededAction {
+//   List<Course> courses;
+//   FetchCoursesSucceededAction(this.courses);
+// }
 
 class FetchCoursesFailedAction {
   final dynamic error;

@@ -1,41 +1,41 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/globals.dart' as globals;
+import 'package:univ_port_app/university_user.dart';
 
 class DashboardGreetings extends StatefulWidget {
-  const DashboardGreetings({super.key});
+  final UniversityUser user;
+  const DashboardGreetings({super.key, required this.user});
 
   @override
   State<DashboardGreetings> createState() => _DashboardGreetingsState();
 }
 
 class _DashboardGreetingsState extends State<DashboardGreetings> {
-  late StreamSubscription _subscription;
+  // late StreamSubscription _subscription;
   String? _username = globals.reduxStore.state.username;
 
   @override
   void initState() {
     super.initState();
-    globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
-    _subscription = globals.reduxStore.onChange.listen((event) {
-      setState(() {
-        if (event.username == null) {
-          _username = event.user?.firebaseUser.displayName;
-        } else {
-          _username = event.username;
-        }
-      });
-    });
+
+    // globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
+    // _subscription = globals.reduxStore.onChange.listen((event) {
+    //   setState(() {
+    //     if (event.username == null) {
+    //       _username = event.user?.firebaseUser.displayName;
+    //     } else {
+    //       _username = event.username;
+    //     }
+    //   });
+    // });
   }
 
-  @override
-  void dispose() {
-    _subscription.cancel();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   _subscription.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
                   child: Container(
                     padding: const EdgeInsets.only(left: 15),
                     child: Text(
-                      'Hello, ${_username ?? ""}',
+                      'Hello, ${widget.user.displayName}',
                       style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
                     ),
                   ),

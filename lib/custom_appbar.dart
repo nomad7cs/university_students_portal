@@ -19,6 +19,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
   Future<void> _signOut() async {
     globals.reduxStore.dispatch(UserLoggedOutAction());
     globals.reduxStore.dispatch(NavigateToUrlAction('/login'));
+    //Provider.of<MyProvider>(context).reset();
     try {
       await FirebaseAuth.instance.signOut();
       // If using Google sign-in, also sign out from Google:

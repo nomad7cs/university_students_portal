@@ -10,10 +10,13 @@ class StudyMaterials extends StatelessWidget {
       borderRadius: const BorderRadius.all(Radius.circular(10)),
       color: Colors.blue[50],
       child: Container(
-        height: 220.0,
-        padding: const EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
+        // height: 220.0,
+        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            const Text('Materials:', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
             Row(
               children: [
                 Flexible(
