@@ -2,15 +2,17 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:univ_port_app/admin_screen.dart';
+import 'package:univ_port_app/admin/edit_courses.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/app_router/route_information.dart';
 import 'package:univ_port_app/custom_profile_screen.dart';
+import 'package:univ_port_app/edit_teachers_and_students_screen.dart';
 import 'package:univ_port_app/globals.dart' as globals;
 import 'package:univ_port_app/home_screen.dart';
 import 'package:univ_port_app/login_screen.dart';
 import 'package:univ_port_app/payment_screen.dart';
-import 'package:univ_port_app/projects/projects.dart';
+import 'package:univ_port_app/project_screen.dart';
+import 'package:univ_port_app/projects/projects_screen.dart';
 import 'package:univ_port_app/request_papers/request_screen.dart';
 
 import '../request_papers/services_requests.dart';
@@ -78,12 +80,16 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
           return const MaterialPage(key: ValueKey('RequestPaper'), child: RequestScreen());
         case '/profile':
           return const MaterialPage(key: ValueKey('Profile'), child: CustomProfileScreen());
-        case '/admin':
-          return const MaterialPage(key: ValueKey('Admin'), child: AdminScreen());
+        case '/edit_teachers_and_students':
+          return const MaterialPage(key: ValueKey('EditTeachersAndStudents'), child: EditTeachersAndStudentsScreen());
+        case '/edit_courses':
+          return const MaterialPage(key: ValueKey('courses'), child: EditCourses());
         case '/payment':
           return const MaterialPage(key: ValueKey('PaymentScreen'), child: PaymentScreen());
         case '/projects':
-          return const MaterialPage(key: ValueKey('PaymentScreen'), child: Projects());
+          return const MaterialPage(key: ValueKey('PaymentScreen'), child: ProjectsScreen());
+        case '/project_view':
+          return const MaterialPage(key: ValueKey('project_view'), child: ProjectScreen());
       }
       return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
     })

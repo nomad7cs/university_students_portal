@@ -55,11 +55,13 @@ class _AppDrawerState extends State<AppDrawer> {
                     backgroundColor: Colors.brown.shade800,
                     // child: const Text('HR'),
                   ),
-                  Text(
-                    _username ?? "",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
+                  Flexible(
+                    child: Text(
+                      _username ?? "",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
                     ),
                   ),
                 ],
@@ -87,7 +89,7 @@ class _AppDrawerState extends State<AppDrawer> {
           ),
           ListTile(
             onTap: () {
-              // globals.store.dispatch(NavigateToUrlAction('/courses'));
+              globals.reduxStore.dispatch(NavigateToUrlAction('/edit_courses'));
             },
             leading: const Icon(Icons.menu_book_rounded),
             title: const Text('Courses'),
@@ -133,7 +135,7 @@ class _AppDrawerState extends State<AppDrawer> {
           // ),
           ListTile(
             onTap: () {
-              globals.reduxStore.dispatch(NavigateToUrlAction('/admin'));
+              globals.reduxStore.dispatch(NavigateToUrlAction('/edit_teachers_and_students'));
             },
             leading: const Icon(Icons.edit),
             title: const Text('Admin'),

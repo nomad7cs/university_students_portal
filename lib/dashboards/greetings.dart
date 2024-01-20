@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:univ_port_app/globals.dart' as globals;
-import 'package:univ_port_app/university_user.dart';
+import 'package:univ_port_app/models/teachers.dart';
+import 'package:univ_port_app/models/university_user.dart';
 
 class DashboardGreetings extends StatefulWidget {
   final UniversityUser user;
@@ -15,21 +16,10 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
   // late StreamSubscription _subscription;
   String? _username = globals.reduxStore.state.username;
 
-  @override
-  void initState() {
-    super.initState();
-
-    // globals.reduxStore.dispatch(FetchExtraUserInfoAction(uid: globals.reduxStore.state.user!.firebaseUser.uid));
-    // _subscription = globals.reduxStore.onChange.listen((event) {
-    //   setState(() {
-    //     if (event.username == null) {
-    //       _username = event.user?.firebaseUser.displayName;
-    //     } else {
-    //       _username = event.username;
-    //     }
-    //   });
-    // });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   // @override
   // void dispose() {
@@ -57,9 +47,26 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
                 Flexible(
                   child: Container(
                     padding: const EdgeInsets.only(left: 15),
-                    child: Text(
-                      'Hello, ${widget.user.displayName}',
-                      style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+                    child: RichText(
+                      text: TextSpan(children: <TextSpan>[
+                        TextSpan(
+                          text: () {
+                            String prefix = ' ';
+                            if (widget.user is Teacher) {
+                              return prefix = 'Welcome back, Dr. ';
+                            } else {
+                              return prefix = 'Welcome back, ';
+                            }
+                            return '$prefix${widget.user.displayName}!';
+                          }(),
+                          // style: TextStyle(fontWeight: FontWeight.bold),
+                          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
+                        ),
+                        TextSpan(
+                          text: widget.user.displayName,
+                          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+                        ),
+                      ]),
                     ),
                   ),
                 ),

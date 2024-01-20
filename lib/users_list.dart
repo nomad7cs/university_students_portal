@@ -59,7 +59,7 @@ class TeachersList extends StatefulWidget {
 }
 
 class _TeachersListState extends State<TeachersList> {
-  late Future _teachers;
+  late Future<QuerySnapshot<Map<String, dynamic>>> _teachers;
 
   @override
   void initState() {
@@ -71,7 +71,7 @@ class _TeachersListState extends State<TeachersList> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _teachers,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const CircularProgressIndicator();
           } else if (snapshot.connectionState == ConnectionState.done) {
@@ -79,8 +79,8 @@ class _TeachersListState extends State<TeachersList> {
               return const Text('Error fetching teachers');
             } else {
               // print('\x1B[31m ------------------- users:\x1B[0m ${snapshot.data.docs[0]['totalEarnedHours']}');
-              if (snapshot.data != null && snapshot.data.docs.length > 0) {
-                final usersDocs = snapshot.data.docs;
+              if (snapshot.data != null && snapshot.data!.docs.isNotEmpty) {
+                final usersDocs = snapshot.data!.docs;
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: usersDocs.length,

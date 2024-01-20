@@ -1,15 +1,18 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:univ_port_app/Teacher.dart';
-import 'package:univ_port_app/course.dart';
+import 'package:univ_port_app/dashboards/admin_dashboard.dart';
+import 'package:univ_port_app/dashboards/student_dashboard.dart';
+import 'package:univ_port_app/dashboards/teacher_dashboard.dart';
+import 'package:univ_port_app/dashboards/upcomings.dart';
 import 'package:univ_port_app/globals.dart' as globals;
-import 'package:univ_port_app/student.dart';
-import 'package:univ_port_app/university_user.dart';
+import 'package:univ_port_app/models/admins.dart';
+import 'package:univ_port_app/models/courses.dart';
+import 'package:univ_port_app/models/students.dart';
+import 'package:univ_port_app/models/teachers.dart';
+import 'package:univ_port_app/models/university_user.dart';
 
 import 'app_drawer.dart';
 import 'custom_appbar.dart';
-import 'dashboard/dashboard_details.dart';
-import 'dashboard/upcomings.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -28,31 +31,31 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Course> courses = [];
   late UniversityUser currentUser;
 
-  @override
-  void initState() {
-    super.initState();
-    // FirebaseFirestore.instance
-    //     .collection('users')
-    //     .where('uid', isEqualTo: globals.reduxStore.state.user!.firebaseUser.uid)
-    //     .get()
-    //     .then((documentSnapshot) {
-    //   if (documentSnapshot.docs.isNotEmpty) {
-    //     if (documentSnapshot.docs[0].data().containsKey('isStudent')) {
-    //       isStudent = documentSnapshot.docs[0]['isStudent'];
-    //     }
-    //     if (documentSnapshot.docs[0].data().containsKey('totalEarnedHours')) {
-    //       totalEarnedHours = documentSnapshot.docs[0]['totalEarnedHours'];
-    //     }
-    //     if (documentSnapshot.docs[0].data().containsKey('displayName')) {
-    //       username = documentSnapshot.docs[0]['displayName'];
-    //     }
-    //   }
-    // }).catchError((error) {
-    //   if (kDebugMode) {
-    //     print(error);
-    //   }
-    // });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .where('uid', isEqualTo: globals.reduxStore.state.user!.firebaseUser.uid)
+  //       .get()
+  //       .then((documentSnapshot) {
+  //     if (documentSnapshot.docs.isNotEmpty) {
+  //       if (documentSnapshot.docs[0].data().containsKey('isStudent')) {
+  //         isStudent = documentSnapshot.docs[0]['isStudent'];
+  //       }
+  //       if (documentSnapshot.docs[0].data().containsKey('totalEarnedHours')) {
+  //         totalEarnedHours = documentSnapshot.docs[0]['totalEarnedHours'];
+  //       }
+  //       if (documentSnapshot.docs[0].data().containsKey('displayName')) {
+  //         username = documentSnapshot.docs[0]['displayName'];
+  //       }
+  //     }
+  //   }).catchError((error) {
+  //     if (kDebugMode) {
+  //       print(error);
+  //     }
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -74,17 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
               .where('uid', isEqualTo: globals.reduxStore.state.user!.firebaseUser.uid)
               .get(),
           builder: (context, snapshot) {
-            // if (documentSnapshot.docs.isNotEmpty) {
-            //   if (documentSnapshot.docs[0].data().containsKey('isStudent')) {
-            //     isStudent = documentSnapshot.docs[0]['isStudent'];
-            //   }
-            //   if (documentSnapshot.docs[0].data().containsKey('totalEarnedHours')) {
-            //     totalEarnedHours = documentSnapshot.docs[0]['totalEarnedHours'];
-            //   }
-            //   if (documentSnapshot.docs[0].data().containsKey('displayName')) {
-            //     username = documentSnapshot.docs[0]['displayName'];
-            //   }
-            // }
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.connectionState == ConnectionState.done) {
@@ -93,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
               } else {
                 if (snapshot.data!.docs.isNotEmpty) {
                   final userDoc = snapshot.data!.docs[0];
+                  String targetUser = 'student'; // student, teacher, admin
 
                   if (userDoc.data().containsKey('displayName')) {
                     displayName = userDoc.data()['displayName'];
@@ -111,7 +104,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           () {
                         List<Course> r = [];
                         for (var i = 0; i < userDoc.data()['courses'].length; i++) {
-                          r.add(Course(code: '', fullName: userDoc.data()['courses'][i]));
+                          r.add(Course(
+                            code: '',
+                            fullName: userDoc.data()['courses'][i],
+                            teacherId: '',
+                          ));
                         }
                         return r;
                       }();
@@ -124,11 +121,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       courses: courses,
                     );
                   } else if (userDoc.data().containsKey('isAdmin') && userDoc.data()['isAdmin']) {
+                    targetUser = 'admin';
                     currentUser = AdminUser(
                       displayName: userDoc.data()['displayName'],
                       email: userDoc.data()['email'],
                     );
                   } else {
+                    targetUser = 'teacher';
                     currentUser = Teacher(
                       displayName: userDoc.data()['displayName'],
                       email: userDoc.data()['email'],
@@ -137,7 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           () {
                         List<Course> r = [];
                         for (var i = 0; i < userDoc.data()['courses'].length; i++) {
-                          r.add(Course(code: '', fullName: userDoc.data()['courses'][i]));
+                          r.add(Course(
+                            code: '',
+                            fullName: userDoc.data()['courses'][i],
+                            teacherId: '',
+                          ));
                         }
                         return r;
                       }(),
@@ -146,6 +149,35 @@ class _HomeScreenState extends State<HomeScreen> {
                   }
 
                   return SingleChildScrollView(child: () {
+                    List<Widget>? targetViews = [];
+                    switch (targetUser) {
+                      case 'admin':
+                        targetViews = () {
+                          return [
+                            Flexible(
+                                child: AdminDashboard(
+                              admin: currentUser as AdminUser,
+                            ))
+                          ];
+                        }();
+                        break;
+                      case 'teacher':
+                        targetViews = [Flexible(child: TeacherDashboard(teacher: currentUser as Teacher))];
+                        break;
+                      case 'student':
+                      default:
+                        targetViews = [
+                          Flexible(
+                            flex: 2,
+                            fit: FlexFit.loose,
+                            child: StudentDashboard(student: currentUser as Student),
+                          ),
+                          const SizedBox(width: 15.0),
+                          const Flexible(fit: FlexFit.loose, child: Upcomings()),
+                        ];
+                        break;
+                    }
+
                     if (isSmallScreen) {
                       return Container(
                         padding: const EdgeInsets.all(5.0),
@@ -153,16 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           // mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Flexible(fit: FlexFit.loose, child: DashboardDetails(user: currentUser)),
-                            const SizedBox(height: 10.0),
-                            () {
-                              if (userDoc.data().containsKey('isStudent') && userDoc.data()['isStudent']) {
-                                return const Flexible(fit: FlexFit.loose, child: Upcomings());
-                              }
-                              return Container();
-                            }(),
-                          ],
+                          children: [...targetViews],
                         ),
                       );
                     } else {
@@ -172,21 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.max,
                           // mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Flexible(
-                                flex: 5,
-                                fit: FlexFit.loose,
-                                child: DashboardDetails(
-                                  user: currentUser,
-                                )),
-                            const SizedBox(width: 15.0),
-                            () {
-                              if (userDoc.data().containsKey('isStudent') && userDoc.data()['isStudent']) {
-                                return const Flexible(fit: FlexFit.loose, child: Upcomings());
-                              }
-                              return Container();
-                            }(),
-                          ],
+                          children: [...targetViews],
                         ),
                       );
                     }

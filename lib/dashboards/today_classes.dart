@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/globals.dart' as globals;
-import 'package:univ_port_app/student.dart';
+import 'package:univ_port_app/models/university_user.dart';
 
 class TodayClasses extends StatefulWidget {
-  final Student student;
-  const TodayClasses({super.key, required this.student});
+  final UniversityUser user;
+  const TodayClasses({super.key, required this.user});
 
   @override
   State<TodayClasses> createState() => _TodayClassesState();

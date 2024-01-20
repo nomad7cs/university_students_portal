@@ -1,5 +1,5 @@
-import 'package:univ_port_app/course.dart';
-import 'package:univ_port_app/university_user.dart';
+import 'package:univ_port_app/models/courses.dart';
+import 'package:univ_port_app/models/university_user.dart';
 
 class Teacher extends UniversityUser {
   List<Course>? courses;

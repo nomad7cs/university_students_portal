@@ -5,14 +5,14 @@ import 'package:univ_port_app/custom_appbar.dart';
 import 'package:univ_port_app/globals.dart' as globals;
 import 'package:univ_port_app/users_list.dart';
 
-class AdminScreen extends StatefulWidget {
-  const AdminScreen({super.key});
+class EditTeachersAndStudentsScreen extends StatefulWidget {
+  const EditTeachersAndStudentsScreen({super.key});
 
   @override
-  State<AdminScreen> createState() => _AdminScreenState();
+  State<EditTeachersAndStudentsScreen> createState() => _EditTeachersAndStudentsScreenState();
 }
 
-class _AdminScreenState extends State<AdminScreen> {
+class _EditTeachersAndStudentsScreenState extends State<EditTeachersAndStudentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

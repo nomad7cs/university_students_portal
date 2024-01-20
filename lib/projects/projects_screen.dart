@@ -3,20 +3,22 @@ import 'dart:math';
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
 import 'package:univ_port_app/app_drawer.dart';
+import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/custom_appbar.dart';
+import 'package:univ_port_app/globals.dart' as globals;
 
-class Projects extends StatefulWidget {
-  const Projects({super.key});
+class ProjectsScreen extends StatefulWidget {
+  const ProjectsScreen({super.key});
 
   @override
-  State<Projects> createState() => _ProjectsState();
+  State<ProjectsScreen> createState() => _ProjectsScreenState();
 }
 
-class _ProjectsState extends State<Projects> {
+class _ProjectsScreenState extends State<ProjectsScreen> {
   @override
   Widget build(BuildContext context) {
-    final MediaQueryData mediaQuery = MediaQuery.of(context);
-    final bool isSmallScreen = mediaQuery.size.width < 600.0;
+    // final MediaQueryData mediaQuery = MediaQuery.of(context);
+    // final bool isSmallScreen = mediaQuery.size.width < 600.0;
     return Scaffold(
       // appBar: PreferredSize(
       //   preferredSize: const Size.fromHeight(100),
@@ -27,83 +29,67 @@ class _ProjectsState extends State<Projects> {
       body: SafeArea(
         top: true,
 
-        child: SingleChildScrollView(child: () {
-          if (isSmallScreen) {
-            return Container(
-              padding: const EdgeInsets.all(5.0),
-              child: const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                // mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  // Flexible(fit: FlexFit.loose, child: DashboardDetails()),
-                  SizedBox(height: 10.0),
-                  // Flexible(fit: FlexFit.loose, child: Upcomings()),
-                ],
-              ),
-            );
-          } else {
-            return Container(
-              width: double.infinity,
-              alignment: Alignment.center,
-              padding: const EdgeInsets.all(50.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: const Text('Graduation Projects\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  ),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                  const Divider(),
-                  const Flexible(child: Project()),
-                ],
-              ),
-            );
-          }
-        }()),
+        child: SingleChildScrollView(
+          child: Container(
+            width: double.infinity,
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(50.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                  alignment: Alignment.center,
+                  child: const Text('Graduation Projects\n', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+                const Divider(),
+                const Flexible(child: Project()),
+              ],
+            ),
+          ),
+        ),
         // ),
       ),
     );
@@ -123,7 +109,7 @@ class _ProjectState extends State<Project> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         SizedBox(
           width: 150.0,
@@ -132,7 +118,7 @@ class _ProjectState extends State<Project> {
             child: Image(
               image: NetworkImage(() {
                 final Faker faker = Faker();
-                return faker.image.image(keywords: ['science', 'project'], random: true);
+                return faker.image.image(keywords: ['computer science', 'project'], random: true);
               }()),
               fit: BoxFit.fitWidth,
             ),
@@ -151,7 +137,7 @@ class _ProjectState extends State<Project> {
                   TextSpan(
                     text: '${() {
                       final Faker faker = Faker();
-                      return faker.lorem.words(5);
+                      return faker.lorem.words(5).join(' ');
                     }()}\n',
                     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -186,7 +172,7 @@ class _ProjectState extends State<Project> {
                 Chip(
                   avatar: CircleAvatar(backgroundImage: NetworkImage(() {
                     final Faker faker = Faker();
-                    print('${faker.date.month()} / ${faker.date.year()}');
+                    // print('${faker.date.month()} / ${faker.date.year()}');
                     return faker.image.image(keywords: [
                       'account',
                       'male',
@@ -239,7 +225,6 @@ class _ProjectState extends State<Project> {
               ],
             )),
             const SizedBox(height: 5.0),
-            ////
             () {
               var random = Random(); // Use Random() for general purposes
               int minYear = 2010;
@@ -250,10 +235,21 @@ class _ProjectState extends State<Project> {
               int maxMonth = 12;
               int randomMonth = minMonth + random.nextInt(maxMonth - minMonth + 1);
               return Container(padding: const EdgeInsets.fromLTRB(20, 5, 50, 5), child: Text('$randomMonth - $randomYear'));
-            }()
-
-            ////
+            }(),
           ],
+        ),
+        Expanded(child: Container()),
+        Flexible(
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: ElevatedButton.icon(
+              onPressed: () {
+                globals.reduxStore.dispatch(NavigateToUrlAction('/project_view'));
+              },
+              icon: const Icon(Icons.keyboard_arrow_right, size: 25),
+              label: const Text('more'),
+            ),
+          ),
         ),
       ],
     );

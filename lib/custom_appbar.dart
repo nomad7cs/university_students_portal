@@ -73,7 +73,15 @@ class _CustomAppBarState extends State<CustomAppBar> {
                   if (snapshot.data != null) {
                     return IconButton(
                       icon: const Icon(Icons.logout),
-                      onPressed: _signOut, // TODO: Implement a dropdown or navigate to profile
+                      onPressed: () {
+                        _signOut();
+                        setState(() {
+                          // _key.currentState!.rebuildApp();
+                          // _AppShellState();
+                          // context.findAncestorStateOfType<_AppShellState>()!.rebuildApp();
+                          // AppShell.rebuildApp();
+                        });
+                      }, // TODO: Implement a dropdown or navigate to profile
                     );
                   }
                   return IconButton(

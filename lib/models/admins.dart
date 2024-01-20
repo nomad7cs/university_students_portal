@@ -1,9 +1,4 @@
-class UniversityUser {
-  String displayName;
-  String email;
-
-  UniversityUser({required this.displayName, required this.email});
-}
+import 'package:univ_port_app/models/university_user.dart';
 
 class AdminUser extends UniversityUser {
   static bool isAdmin = true;

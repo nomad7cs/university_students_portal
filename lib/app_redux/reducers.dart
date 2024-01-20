@@ -75,8 +75,9 @@ MyAppState appReducer(MyAppState state, action) {
       print('\x1B[32mUserLoggedOutAction\x1B[0m');
     }
     return MyAppState(
-        currentUrl: state.currentUrl,
-        currentUrlStack: [...state.currentUrlStack],
+        currentUrl: '/login',
+        currentUrlStack: ['/login'],
+        // currentUrlStack: [...state.currentUrlStack],
         user: null,
         todayCourses: null,
         // studentCourses: null,
@@ -88,8 +89,8 @@ MyAppState appReducer(MyAppState state, action) {
         totalEarnedHours: null,
         earnedHoursPayload: null,
         namePayload: null,
-        currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
-        currentServiceName: state.currentServiceName,
+        currentServiceMinRequiredHours: null,
+        currentServiceName: null,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchCoursesAction) {
     if (kDebugMode) {

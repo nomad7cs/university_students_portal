@@ -29,11 +29,11 @@ Future<void> main() async {
   // usePathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   await initializeFirebase();
-  runApp(const AppShell());
+  runApp(AppShell());
 }
 
 class AppShell extends StatefulWidget {
-  const AppShell({super.key});
+  AppShell({super.key});
 
   @override
   State<StatefulWidget> createState() => _AppShellState();

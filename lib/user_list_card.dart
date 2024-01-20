@@ -8,10 +8,6 @@ class StudentListCard extends StatefulWidget {
   final dynamic user;
   const StudentListCard({super.key, required this.user});
 
-  // modifyUser(newValue) {
-  //   user['displayName'] = newValue;
-  // }
-
   @override
   State<StudentListCard> createState() => _StudentListCardState();
 }
@@ -27,8 +23,6 @@ class _StudentListCardState extends State<StudentListCard> {
 
   @override
   Widget build(BuildContext context) {
-    print('-------------------------------------------------------widget.user["displayName"] ${widget.user['displayName']}');
-    print('---------------------------------------------------------widget.user.reference.path ${widget.user.reference.path}');
     _user = null;
     // return Placeholder();
     _user = FirebaseFirestore.instance.doc(widget.user.reference.path).get();
@@ -46,9 +40,9 @@ class _StudentListCardState extends State<StudentListCard> {
               if (!_editState) {
                 return Card(
                   child: ListTile(
-                    title: Text('Name: ${document != null ? document['displayName'].toString() : ''}'),
+                    title: Text('Name: ${document['displayName'].toString()}'),
                     subtitle: Text(
-                        'Total Earned Hours: ${document != null ? document['totalEarnedHours'].toString() : ''} \n ${document != null ? document['email'] : ''}'),
+                        'Total Earned Hours: ${document['totalEarnedHours'].toString()} \n ${document['email']}'),
                     leading: CircleAvatar(backgroundImage: NetworkImage(randomProfileImageURL)),
                     trailing: IconButton(
                       onPressed: () {
@@ -71,7 +65,7 @@ class _StudentListCardState extends State<StudentListCard> {
                           children: [
                             Flexible(
                               child: TextFormField(
-                                initialValue: document != null ? document['displayName'].toString() : '',
+                                initialValue: document['displayName'].toString(),
                                 decoration: const InputDecoration(
                                   // icon: Icon(Icons.person),
                                   hintText: 'Your Full Name',
@@ -92,7 +86,7 @@ class _StudentListCardState extends State<StudentListCard> {
                             ),
                             Flexible(
                                 child: TextFormField(
-                              initialValue: document != null ? document['totalEarnedHours'].toString() : '',
+                              initialValue: document['totalEarnedHours'].toString(),
                               keyboardType: TextInputType.number,
                               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                               decoration: const InputDecoration(
@@ -185,8 +179,6 @@ class _TeacherListCardState extends State<TeacherListCard> {
 
   @override
   Widget build(BuildContext context) {
-    print('-------------------------------------------------------widget.user["displayName"] ${widget.user['displayName']}');
-    print('---------------------------------------------------------widget.user.reference.path ${widget.user.reference.path}');
     _user = null;
     // return Placeholder();
     _user = FirebaseFirestore.instance.doc(widget.user.reference.path).get();
@@ -207,11 +199,11 @@ class _TeacherListCardState extends State<TeacherListCard> {
 
                 return Card(
                   child: ListTile(
-                    title: Text('Name: ${document != null ? document['displayName'].toString() : ''}'),
+                    title: Text('Name: ${document['displayName'].toString()}'),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('${document != null ? document['email'] : ''}'),
+                        Text('${document['email']}'),
                         Wrap(
                           spacing: 5.0,
                           children: [
