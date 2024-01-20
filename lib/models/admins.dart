@@ -4,7 +4,8 @@ class AdminUser extends UniversityUser {
   static bool isAdmin = true;
 
   AdminUser({
+    required String uid,
     required String displayName,
     required String email,
-  }) : super(displayName: displayName, email: email);
+  }) : super(uid: uid, displayName: displayName, email: email);
 }

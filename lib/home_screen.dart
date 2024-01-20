@@ -76,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               .collection('users')
               .where('uid', isEqualTo: globals.reduxStore.state.user!.firebaseUser.uid)
               .get(),
-          builder: (context, snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CircularProgressIndicator();
             } else if (snapshot.connectionState == ConnectionState.done) {
@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (userDoc.data().containsKey('totalEarnedHours')) {
                       totalEarnedHours = userDoc.data()['totalEarnedHours'];
                     }
-                    if (userDoc.data().containsKey('totalEarnedHours')) {
+                    if (userDoc.data().containsKey('courses')) {
                       courses = //userDoc.data()['courses'];
                           () {
                         List<Course> r = [];
@@ -115,6 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     }
 
                     currentUser = Student(
+                      uid: userDoc.data()['uid'],
                       displayName: displayName,
                       email: email,
                       earnedHours: totalEarnedHours,
@@ -123,12 +124,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   } else if (userDoc.data().containsKey('isAdmin') && userDoc.data()['isAdmin']) {
                     targetUser = 'admin';
                     currentUser = AdminUser(
+                      uid: userDoc.data()['uid'],
                       displayName: userDoc.data()['displayName'],
                       email: userDoc.data()['email'],
                     );
                   } else {
                     targetUser = 'teacher';
                     currentUser = Teacher(
+                      uid: userDoc.data()['uid'],
                       displayName: userDoc.data()['displayName'],
                       email: userDoc.data()['email'],
                       courses: //userDoc.data()['courses'].map((c) => Course(code: 's', fullName: c)).toList() as List<Course>

@@ -23,12 +23,12 @@ class _StudentDashboardState extends State<StudentDashboard> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         DashboardGreetings(user: widget.student),
-        const Row(
+        Row(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Flexible(child: StudyMaterials()),
-            SizedBox(width: 10.0),
-            Flexible(child: StudentSummary()),
+            const Flexible(child: StudyMaterials()),
+            const SizedBox(width: 10.0),
+            Flexible(child: StudentSummary(studentUid: widget.student.uid)),
           ],
         ),
         const SizedBox(height: 10.0),
