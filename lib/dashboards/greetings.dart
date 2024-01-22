@@ -57,14 +57,13 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
                             } else {
                               return prefix = 'Welcome back, ';
                             }
-                            return '$prefix${widget.user.displayName}!';
                           }(),
                           // style: TextStyle(fontWeight: FontWeight.bold),
-                          style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 25),
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w500, fontSize: 25),
                         ),
                         TextSpan(
                           text: widget.user.displayName,
-                          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 25),
+                          style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w600, fontSize: 25),
                         ),
                       ]),
                     ),
@@ -75,7 +74,8 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
                     padding: const EdgeInsets.only(left: 15),
                     child: Text(
                       formattedDate,
-                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
+                      // style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.grey[700]),
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 12, color: Colors.white),
                     ),
                   ),
                 ),
@@ -97,8 +97,8 @@ class _DashboardGreetingsState extends State<DashboardGreetings> {
                   child: TextFormField(
                     decoration: InputDecoration(
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                          borderSide: const BorderSide(color: Colors.grey, width: 0.5),
+                          borderRadius: BorderRadius.circular(8.0),
+                          borderSide: const BorderSide(color: Colors.white, width: 0.5),
                         ),
                         labelText: 'Search',
                         prefixIcon: const Icon(Icons.search)),

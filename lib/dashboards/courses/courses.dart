@@ -1,5 +1,7 @@
 import 'package:faker/faker.dart';
 import 'package:flutter/material.dart';
+import 'package:univ_port_app/app_redux/actions.dart';
+import 'package:univ_port_app/globals.dart' as globals;
 import 'package:univ_port_app/models/courses.dart';
 
 class CoursesList extends StatefulWidget {
@@ -58,8 +60,11 @@ class CourseListCard extends StatelessWidget {
             // setState(() {
             //   _editState = true;
             // });
+
+            globals.reduxStore.dispatch(SetNavigationPayloadAction(course));
+            globals.reduxStore.dispatch(NavigateToUrlAction('/course'));
           },
-          icon: const Icon(Icons.edit),
+          icon: const Icon(Icons.keyboard_arrow_right),
         ),
       ),
     );

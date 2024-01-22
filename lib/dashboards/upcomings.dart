@@ -17,7 +17,7 @@ class _UpcomingsState extends State<Upcomings> {
       margin: const EdgeInsets.all(10.0),
       padding: const EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        border: Border.all(width: 0.5, color: Colors.grey),
+        border: Border.all(width: 0.5, color: Colors.white),
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
       child: const Column(

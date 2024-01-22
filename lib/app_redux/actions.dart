@@ -12,8 +12,12 @@ import 'package:univ_port_app/app_redux/app_state.dart';
 
 class NavigateToUrlAction {
   final String url;
-
   NavigateToUrlAction(this.url);
+}
+
+class SetNavigationPayloadAction {
+  dynamic payload;
+  SetNavigationPayloadAction(this.payload);
 }
 
 class UserLoggedInAction {

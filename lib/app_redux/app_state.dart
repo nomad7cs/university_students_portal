@@ -14,6 +14,7 @@ class MyAppState {
   bool editingUser = false;
   int? totalEarnedHours;
   int? earnedHoursPayload;
+  dynamic? navigationPayload;
   String? namePayload;
   String? username;
   int? currentServiceMinRequiredHours;
@@ -37,6 +38,7 @@ class MyAppState {
     this.username,
     this.currentServiceMinRequiredHours,
     this.currentServiceName,
+    this.navigationPayload,
     this.stateCounter = 1,
   }) {
     if (kDebugMode) {
@@ -49,6 +51,7 @@ class MyAppState {
       print('\x1B[33misStudent:\x1B[0m  $isStudent');
       print('\x1B[33mtotalEarnedHours:\x1B[0m  $totalEarnedHours');
       print('\x1B[33mearnedHoursPayload:\x1B[0m  $earnedHoursPayload');
+      print('\x1B[33m navigationPayload:\x1B[0m  ${navigationPayload ?? ''}');
     }
   }
 

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:univ_port_app/admin/edit_courses.dart';
 import 'package:univ_port_app/app_redux/actions.dart';
 import 'package:univ_port_app/app_router/route_information.dart';
+import 'package:univ_port_app/course_screen_for_teachers.dart';
 import 'package:univ_port_app/custom_profile_screen.dart';
 import 'package:univ_port_app/edit_teachers_and_students_screen.dart';
 import 'package:univ_port_app/globals.dart' as globals;
@@ -90,6 +91,8 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
           return const MaterialPage(key: ValueKey('PaymentScreen'), child: ProjectsScreen());
         case '/project_view':
           return const MaterialPage(key: ValueKey('project_view'), child: ProjectScreen());
+        case '/course':
+          return const MaterialPage(key: ValueKey('course'), child: CourseScreen());
       }
       return const MaterialPage(key: ValueKey('LoginScreen'), child: LoginScreen());
     })

@@ -49,6 +49,7 @@ MyAppState appReducer(MyAppState state, action) {
         namePayload: state.namePayload,
         currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
         currentServiceName: state.currentServiceName,
+        navigationPayload: state.navigationPayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is UserLoggedInAction) {
     if (kDebugMode) {
@@ -69,6 +70,7 @@ MyAppState appReducer(MyAppState state, action) {
         namePayload: state.namePayload,
         currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
         currentServiceName: state.currentServiceName,
+        navigationPayload: state.navigationPayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is UserLoggedOutAction) {
     if (kDebugMode) {
@@ -91,6 +93,7 @@ MyAppState appReducer(MyAppState state, action) {
         namePayload: null,
         currentServiceMinRequiredHours: null,
         currentServiceName: null,
+        navigationPayload: state.navigationPayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is FetchCoursesAction) {
     if (kDebugMode) {
@@ -182,6 +185,7 @@ MyAppState appReducer(MyAppState state, action) {
         username: state.username,
         currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
         currentServiceName: state.currentServiceName,
+        navigationPayload: state.navigationPayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is SetTypeStudentPayloadAction) {
     if (kDebugMode) {
@@ -202,6 +206,7 @@ MyAppState appReducer(MyAppState state, action) {
       namePayload: state.namePayload,
       currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
       currentServiceName: state.currentServiceName,
+      navigationPayload: state.navigationPayload,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is FetchExtraUserInfoAction) {
@@ -230,6 +235,7 @@ MyAppState appReducer(MyAppState state, action) {
         username: action.username,
         currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
         currentServiceName: state.currentServiceName,
+        navigationPayload: state.navigationPayload,
         stateCounter: state.stateCounter + 1);
   } else if (action is SaveUserDataAction) {
     if (kDebugMode) {
@@ -254,6 +260,7 @@ MyAppState appReducer(MyAppState state, action) {
       namePayload: state.namePayload,
       currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
       currentServiceName: state.currentServiceName,
+      navigationPayload: state.navigationPayload,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is SetUserNamePayloadAction) {
@@ -273,6 +280,7 @@ MyAppState appReducer(MyAppState state, action) {
       namePayload: action.namePayload,
       currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
       currentServiceName: state.currentServiceName,
+      navigationPayload: state.navigationPayload,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is SetCurrentServiceMinRequiredHoursAction) {
@@ -292,6 +300,7 @@ MyAppState appReducer(MyAppState state, action) {
       namePayload: state.namePayload,
       currentServiceMinRequiredHours: action.minRequiredHours,
       currentServiceName: state.currentServiceName,
+      navigationPayload: state.navigationPayload,
       stateCounter: state.stateCounter + 1,
     );
   } else if (action is SetCurrentServiceNameAction) {
@@ -311,6 +320,27 @@ MyAppState appReducer(MyAppState state, action) {
       namePayload: state.namePayload,
       currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
       currentServiceName: action.name,
+      navigationPayload: state.navigationPayload,
+      stateCounter: state.stateCounter + 1,
+    );
+  } else if (action is SetNavigationPayloadAction) {
+    return MyAppState(
+      currentUrl: state.currentUrl,
+      currentUrlStack: [...state.currentUrlStack],
+      user: state.user,
+      todayCourses: state.todayCourses,
+      // studentCourses: state.studentCourses,
+      isStudent: state.isStudent,
+      isStudentPayload: state.isStudentPayload,
+      unknownUrl: state.unknownUrl,
+      username: state.username,
+      editingUser: state.editingUser,
+      totalEarnedHours: state.totalEarnedHours,
+      earnedHoursPayload: state.earnedHoursPayload,
+      namePayload: state.namePayload,
+      currentServiceMinRequiredHours: state.currentServiceMinRequiredHours,
+      currentServiceName: state.currentServiceName,
+      navigationPayload: action.payload,
       stateCounter: state.stateCounter + 1,
     );
   }
